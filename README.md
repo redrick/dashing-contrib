@@ -1,9 +1,13 @@
-# Dashing::Contrib
+# dashing-contrib
 
-TODO: Write a gem description
+This projects is an extension to Shopify's Dashing. It aims to solve a couple of problems
+ * Extend the Dashing's widgets functionality in a healthy pattern.
+ * Embrace sharing, reusing, testing common jobs data manipulation functionality
+ * Make it easier to work with History.yml in file and memory
+ 
+ 
 
 ## Installation
-
 Add this line to your application's Gemfile:
 
     gem 'dashing-contrib'

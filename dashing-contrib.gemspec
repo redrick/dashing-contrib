@@ -11,13 +11,13 @@ Gem::Specification.new do |spec|
   spec.email         = ["me@jing.io"]
   spec.description   = %q{ Dashing Contrib aims to make templates plugins easy to maintain and contribute }
   spec.summary       = %q{ An extension to Dashing that makes easier to maintaining, sharing widgets and test common tasks }
-  spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.homepage      = 'https://github.com/QubitProducts/dashing-contrib'
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
   
   spec.add_dependency 'dotenv', '~> 0.11.1'
   spec.add_dependency 'thor', '~> 0.18.1'

@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = DashingContrib::VERSION
   spec.executables = %w(dashing-contrib)
   spec.authors       = ["Jing Dong"]
-  spec.email         = ["jing.dong@activars.com"]
-  spec.description   = %q{Dashing Contrib aims to make templates plugins easy to maintain and contribute}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.email         = ["me@jing.io"]
+  spec.description   = %q{ Dashing Contrib aims to make templates plugins easy to maintain and contribute }
+  spec.summary       = %q{ An extension to Dashing that makes easier to maintaining, sharing widgets and test common tasks }
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'dotenv', '~> 0.11.1'
   spec.add_dependency 'thor', '~> 0.18.1'
 
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency 'rake'
 end

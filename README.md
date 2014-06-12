@@ -38,6 +38,19 @@ Add these lines to `assets/stylesheets/application.scss`
 
  TODO:
 
+## How to contribute
+
+There are a couple of ways to contribute. Brining those widgets scattered in github, in multiple format into this repository. They usually falling into the following two categories:
+
+### Widgets
+
+Common widgets should be generic solution to a common requirements. e.g. line graph,better clock with common functionalities. Documentation should be written as a readme file under widget's own directory.
+
+### Jobs utils
+
+Common Job data processing for graphing purpose.
+
+
 ## Components/Widgets made by contributors
 
  * [jwalton](https://gist.github.com/jwalton)

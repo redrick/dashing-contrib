@@ -1,0 +1,13 @@
+require 'nagiosharder'
+
+module DashingContrib
+  module Nagios
+    class Client
+      attr_reader :client
+
+      def initialize(options = {})
+        @client = NagiosHarder::Site.new(options[:endpoint], options[:username], options[:password], options[:version], options[:time_format])
+      end
+    end
+  end
+end

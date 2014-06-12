@@ -2,6 +2,7 @@ require 'dashing-contrib/version'
 require 'dashing-contrib/configuration'
 require 'dashing-contrib/history'
 require 'dashing-contrib/routes'
+require 'dashing-contrib/bottles/time'
 
 module DashingContrib
   class << self

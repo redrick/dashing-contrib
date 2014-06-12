@@ -20,6 +20,8 @@ Gem::Specification.new do |spec|
   
   spec.add_dependency 'dotenv', '~> 0.11.1'
   spec.add_dependency 'thor', '~> 0.18.1'
-
+  spec.add_dependency 'rest-client', '~> 1.6.7'
+  spec.add_dependency 'multi_json', '~> 1.10.1'
+  spec.add_dependency 'time_diff', '~> 0.3.0'
   spec.add_development_dependency 'rake'
 end

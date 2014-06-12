@@ -4,30 +4,40 @@ This projects is an extension to Shopify's Dashing. It aims to solve a couple of
  * Extend the Dashing's widgets functionality in a healthy pattern.
  * Embrace sharing, reusing, testing common jobs data manipulation functionality
  * Make it easier to work with History.yml in file and memory
+ * A common way to load external configuration via dotenv
  
- 
-
 ## Installation
-Add this line to your application's Gemfile:
+Add this line to your Dashing's dashboard Gemfile:
 
-    gem 'dashing-contrib'
+    gem 'dashing-contrib', '~> 0.0.2'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Add the following on top of the `config.ru`
 
-    $ gem install dashing-contrib
+    $: << File.expand_path('./lib', __dir__)
+    require 'dashing-contrib'
+    require 'dashing'
+    DashingContrib.configure
+    
+Add these lines to `assets/javascripts/application.coffee`
 
-## Usage
+    #=require dashing-contrib/assets/widgets
 
-TODO: Write usage instructions here
+Add these lines to `assets/stylesheets/application.scss`
 
-## Contributing
+    //=require dashing-contrib/assets/widgets
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+## Included Widgets
+
+ * [Rickshawgraph](https://gist.github.com/jwalton/7916168) made by [jwalton](https://gist.github.com/jwalton)
+
+## Included Job helpers
+
+ TODO:
+
+## Components/Widgets made by contributors
+
+ * [jwalton](https://gist.github.com/jwalton)

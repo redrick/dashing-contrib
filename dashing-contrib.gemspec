@@ -6,7 +6,6 @@ require 'dashing-contrib/version'
 Gem::Specification.new do |spec|
   spec.name          = "dashing-contrib"
   spec.version       = DashingContrib::VERSION
-  spec.executables = %w(dashing-contrib)
   spec.authors       = ["Jing Dong"]
   spec.email         = ["me@jing.io"]
   spec.description   = %q{ Dashing Contrib aims to make templates plugins easy to maintain and contribute }

@@ -1,7 +1,7 @@
 Pingdom Uptime
 ==============
 
-
+![](preview.png)
 
 ### Example html usage
 

@@ -9,7 +9,7 @@ dashing-contrib includes this widget by default. If you want view template struc
 The graphing widget shows graphs using the Rickshaw graphing library.  The names of data fields
 should be (vaguely) familiar if you've used Rickshaw before.
 
-It's recommended that you replace the /assets/javascripts/rickshaw.min.js from your dashboard with the latest from [here](https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.js).
+dashing-contrib includes [latest rickshaw.js](https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.js). You can delete generated rickshaw Javascript in dashing project assets folder.
 
 Supported HTML data fields
 --------------------------

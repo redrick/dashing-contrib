@@ -10,6 +10,7 @@ module DashingContrib
     end
     
     def raw_event(event_name)
+      return nil if history[event_name].nil?
       history[event_name].gsub(/^data:/, '')
     rescue
       nil

@@ -17,10 +17,9 @@ Add the widget HTML to your dashboard
 In `/jobs/sidekiq.rb` you need to configure the connection to your Redis server that backs Sidekiq.
 
 ````
-
 require 'sidekiq/api'
 
-# redis_uri = "redis://:#{YOUR_REDIS_PASSWORD}@#{YOUR_REDIS_HOST}:#{YOUR_REDIS_PORT}"
+redis_uri = "redis://:#{YOUR_REDIS_PASSWORD}@#{YOUR_REDIS_HOST}:#{YOUR_REDIS_PORT}"
 
 Sidekiq.configure_client do |config|
   config.redis = { url: redis_uri, namespace: 'myapp:namespace' }

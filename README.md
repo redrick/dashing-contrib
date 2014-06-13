@@ -34,6 +34,7 @@ Add these lines to `assets/stylesheets/application.scss`
 ## Included Widgets
 
  * [Rickshawgraph](https://gist.github.com/jwalton/7916168) made by [jwalton](https://gist.github.com/jwalton)
+ * [Sidekiq](https://gist.github.com/pallan/57f778cace40fd56fb4d) made by [pallan](https://gist.github.com/pallan)
 
 ## Included Job helpers
 
@@ -55,3 +56,4 @@ Common Job data processing for graphing purpose.
 ## Components/Widgets made by contributors
 
  * [jwalton](https://gist.github.com/jwalton)
+ * [pallan](https://gist.github.com/pallan)

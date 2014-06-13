@@ -1,6 +1,6 @@
 # dashing-contrib
 
-This projects is an extension to Shopify's Dashing. It aims to solve a couple of problems:
+This project is an extension to Shopify's Dashing. It aims to solve a couple of problems:
 
  * Extend the Dashing's widgets functionality in a healthy pattern
  * Embrace sharing, reusing, testing common jobs data manipulation functionality

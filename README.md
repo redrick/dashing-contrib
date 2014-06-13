@@ -33,7 +33,7 @@ Add these lines to `assets/stylesheets/application.scss`
 
 ## Job configurations
 
-Job configurations are managed by `dotenv` gem. Add a `.env` file in your dashing project root. dashing-contrib will load your configuration from `.evn` file automatically. An example:
+Job configurations are managed by `dotenv` gem. Add a `.env` file in your dashing project root. dashing-contrib will load your configuration from `.env` file automatically. An example:
 
 ````
 NAGIOS_ENDPOINT: http://example.com/nagios3/cgi-bin

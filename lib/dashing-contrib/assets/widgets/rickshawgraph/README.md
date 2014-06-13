@@ -1,7 +1,7 @@
 Graphing Widget
 ===============
 
-Documentation initally written by [jwalton](https://gist.github.com/jwalton)
+Documentation initally written by [jwalton](https://gist.github.com/jwalton) from [gist](https://gist.github.com/jwalton/6614023)
 
 The graphing widget shows graphs using the Rickshaw graphing library.  The names of data fields
 should be (vaguely) familiar if you've used Rickshaw before.

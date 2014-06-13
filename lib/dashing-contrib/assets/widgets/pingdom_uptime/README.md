@@ -3,6 +3,11 @@ Pingdom Uptime
 
 ![](preview.png)
 
+
+### Requirement
+
+The smile face requires font-awesome >= 4.1.0. dashing-contrib includes 4.1.0 CSS, you only need to [download](https://github.com/FortAwesome/Font-Awesome/tree/master/fonts) webfonts and replace generated fonts under `/assets/fonts` folder.
+
 ### Example html usage
 
 ````

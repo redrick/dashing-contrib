@@ -23,5 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rest-client', '~> 1.6.7'
   spec.add_dependency 'multi_json', '~> 1.10.1'
   spec.add_dependency 'time_diff', '~> 0.3.0'
+  spec.add_dependency 'sidekiq', '~> 3.0.0'
   spec.add_development_dependency 'rake'
 end

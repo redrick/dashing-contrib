@@ -31,6 +31,22 @@ Add these lines to `assets/stylesheets/application.scss`
 
     //=require dashing-contrib/assets/widgets
 
+## Job configurations
+
+Job configurations are managed by `dotenv` gem. Add a `.env` file in your dashing project root. dashing-contrib will load your configuration from `.evn` file automatically. An example:
+
+````
+NAGIOS_ENDPOINT: http://example.com/nagios3/cgi-bin
+NAGIOS_USERNAME: dasher
+NAGIOS_PASSWORD: readonly
+
+PINGDOM_USERNAME: ping
+PINGDOM_PASSWORD: pong
+PINGDOM_API_KEY: pingpongpingpong
+````
+
+These values can be accessed in jobs `ENV[NAGIOS_ENDPOINT]`
+
 ## Included Widgets
 
  * [Rickshawgraph](https://gist.github.com/jwalton/7916168) made by [jwalton](https://gist.github.com/jwalton)

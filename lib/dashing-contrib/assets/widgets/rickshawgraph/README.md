@@ -3,6 +3,9 @@ Graphing Widget
 
 Documentation initally written by [jwalton](https://gist.github.com/jwalton) from [gist](https://gist.github.com/jwalton/6614023)
 
+dashing-contrib includes this widget by default. If you want view template structured differently, you can create a HTML template in project root `widgets/rickshawgraph/rickshawgraph.html`.
+
+
 The graphing widget shows graphs using the Rickshaw graphing library.  The names of data fields
 should be (vaguely) familiar if you've used Rickshaw before.
 

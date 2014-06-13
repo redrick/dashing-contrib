@@ -10,7 +10,7 @@ This projects is an extension to Shopify's Dashing. It aims to solve a couple of
 ## Installation
 Add this line to your Dashing's dashboard Gemfile:
 
-    gem 'dashing-contrib', '~> 0.0.2'
+    gem 'dashing-contrib', '~> 0.0.4'
 
 And then execute:
 

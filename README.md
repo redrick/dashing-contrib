@@ -51,6 +51,7 @@ These values can be accessed in jobs `ENV[NAGIOS_ENDPOINT]`
 
  * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph) made by [jwalton](https://github.com/jwalton)
  * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq) made by [pallan](https://github.com/pallan)
+ * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/pingdom_uptime) inspired by (Edools)[https://github.com/Edools/dashing-pingdom]
 
 ## Job Helpers Documentations
 
@@ -58,9 +59,9 @@ These values can be accessed in jobs `ENV[NAGIOS_ENDPOINT]`
 
 ## How to contribute
 
-There are a couple of ways to contribute. Brining those widgets scattered in github, in multiple format into this repository. They usually falling into the following two categories:
+There are a couple of ways to contribute. Brining those widgets scattered in github, in multiple format into this repository. They usually falling into the following categories.
 
-### Widgets
+#### Widgets
 
 Common widgets should be generic solution to a common requirements. e.g. line graph,better clock with common functionalities. Documentation should be written as a readme file under widget's own directory.
 

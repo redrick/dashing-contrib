@@ -1,7 +1,7 @@
 Sidekiq Widget
 ===============
 
-Sidekiq widget and documentation is intially developed by [pallan](https://github.com/pallan)
+Sidekiq widget and documentation is intially developed by [pallan](https://github.com/pallan) with some improvements.
 
 ## Usage
 

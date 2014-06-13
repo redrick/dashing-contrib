@@ -3,29 +3,7 @@ Sidekiq Widget
 
 Sidekiq widget and documentation is intially developed by [pallan](https://github.com/pallan)
 
-## Preview
-
-Simple [Dashing](http://shopify.github.com/dashing) widget to display the
-current stats for [Sidekiq](http://sidekiq.org/).
-
-![](https://gist.githubusercontent.com/pallan/57f778cace40fd56fb4d/raw/sidekiq_preview.png)
-
-## Dependencies
-
-Sidekiq version 3.0 or greater is required. Add to dashing's gemfile:
-
-```
-gem 'sidekiq', '~>3.0'
-```
-
-and run `bundle install`.
-
 ## Usage
-
-To use this widget, copy `sidekiq.html`, `sidekiq.coffee`, and
-`sidekiq.scss` into the `/widgets/sidekiq` directory. Put the
-`sidekiq.rb` file in your `/jobs` folder. Copy `sidekiq_log.png` into
-the `/assets/images` directory.
 
 Add the widget HTML to your dashboard
 ```
@@ -36,5 +14,27 @@ Add the widget HTML to your dashboard
 
 ## Settings
 
-In `/jobs/sidekiq.rb` you need to configure the connection to your Redis
-server that backs Sidekiq.
+In `/jobs/sidekiq.rb` you need to configure the connection to your Redis server that backs Sidekiq.
+
+````
+
+require 'sidekiq/api'
+
+# redis_uri = "redis://:#{YOUR_REDIS_PASSWORD}@#{YOUR_REDIS_HOST}:#{YOUR_REDIS_PORT}"
+
+Sidekiq.configure_client do |config|
+  config.redis = { url: redis_uri, namespace: 'myapp:namespace' }
+end
+
+SCHEDULER.every '10s' do
+  stats = Sidekiq::Stats.new
+  metrics = [
+      {label: 'Processed', value: stats.processed },
+      {label: 'Failed', value: stats.failed },
+      {label: 'Retries', value: stats.retry_size },
+      {label: 'Dead', value: stats.dead_size },
+      {label: 'Enqueued', value: stats.enqueued }
+  ]
+  send_event('sidekiq', { metrics: metrics } )
+end
+````

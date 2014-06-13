@@ -3,6 +3,7 @@ require 'dashing-contrib/configuration'
 require 'dashing-contrib/history'
 require 'dashing-contrib/routes'
 require 'dashing-contrib/bottles/time'
+require 'dotenv'
 
 module DashingContrib
   class << self
@@ -16,6 +17,7 @@ module DashingContrib
   def self.configure
     yield configuration if block_given?
     self.configure_sprockets
+    Dotenv.load
   end
 
   private

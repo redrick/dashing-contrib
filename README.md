@@ -47,12 +47,12 @@ PINGDOM_API_KEY: pingpongpingpong
 
 These values can be accessed in jobs `ENV[NAGIOS_ENDPOINT]`
 
-## Included Widgets
+## Widgets Documentations
 
  * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph) made by [jwalton](https://github.com/jwalton)
  * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq) made by [pallan](https://github.com/pallan)
 
-## Included Job helpers
+## Job Helpers Documentations
 
  TODO:
 

@@ -49,8 +49,8 @@ These values can be accessed in jobs `ENV[NAGIOS_ENDPOINT]`
 
 ## Included Widgets
 
- * [Rickshawgraph](https://gist.github.com/jwalton/7916168) made by [jwalton](https://gist.github.com/jwalton)
- * [Sidekiq](https://gist.github.com/pallan/57f778cace40fd56fb4d) made by [pallan](https://gist.github.com/pallan)
+ * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph) made by [jwalton](https://github.com/jwalton)
+ * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq) made by [pallan](https://github.com/pallan)
 
 ## Included Job helpers
 

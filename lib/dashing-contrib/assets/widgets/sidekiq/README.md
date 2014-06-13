@@ -3,6 +3,9 @@ Sidekiq Widget
 
 Sidekiq widget and documentation is intially developed by [pallan](https://github.com/pallan) with some improvements.
 
+![](preview.png)
+
+
 ## Usage
 
 Add the widget HTML to your dashboard

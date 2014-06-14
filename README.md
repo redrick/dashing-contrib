@@ -59,15 +59,19 @@ These values can be accessed in jobs `ENV['NAGIOS_ENDPOINT']`
 
 ## How to contribute
 
-There are a couple of ways to contribute. Brining those widgets scattered in github, in multiple format into this repository. They usually falling into the following categories.
+There are a couple of ways to contribute. Brining those widgets scattered in github, in multiple format into this repository. They usually falling into the following categories:
 
 #### Widgets
 
-Common widgets should be generic solution to a common requirements. e.g. line graph,better clock with common functionalities. Documentation should be written as a readme file under widget's own directory.
+Common widgets should be generic solution to a common requirements. e.g. line graph, better clock with common functionalities. Documentation should be written as a README.md file under widget's own directory, include a preview.png file in the widget folder.
 
-### Jobs utils
+#### Jobs utils
 
 Common Job data processing for graphing purpose.
+
+#### Fix and add test
+
+Test data processing Ruby modules.
 
 
 ## Components/Widgets made by contributors

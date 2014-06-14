@@ -73,8 +73,3 @@ Common Job data processing for graphing purpose.
 
 Test data processing Ruby modules.
 
-
-## Components/Widgets made by contributors
-
- * [jwalton](https://gist.github.com/jwalton)
- * [pallan](https://gist.github.com/pallan)

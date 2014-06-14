@@ -31,9 +31,9 @@ Add these lines to `assets/stylesheets/application.scss`
 
     //=require dashing-contrib/assets/widgets
 
-## Job configurations
+## Job Parameters
 
-Job configurations are managed by `dotenv` gem. Add a `.env` file in your dashing project root. dashing-contrib will load your configuration from `.env` file automatically. An example:
+Shared job parameters are managed by `dotenv` gem. Add a `.env` file in your dashing project root. dashing-contrib will load your configuration from `.env` file automatically. An example `.env` file:
 
 ````
 NAGIOS_ENDPOINT: http://example.com/nagios3/cgi-bin
@@ -45,7 +45,7 @@ PINGDOM_PASSWORD: pong
 PINGDOM_API_KEY: pingpongpingpong
 ````
 
-These values can be accessed in jobs `ENV[NAGIOS_ENDPOINT]`
+These values can be accessed in jobs `ENV['NAGIOS_ENDPOINT']`
 
 ## Widgets Doc
 

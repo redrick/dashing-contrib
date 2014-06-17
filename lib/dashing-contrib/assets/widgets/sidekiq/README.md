@@ -9,7 +9,7 @@ Sidekiq widget and documentation is intially developed by [pallan](https://githu
 ## Usage
 
 Add the widget HTML to your dashboard
-```
+```html
     <li data-row="2" data-col="4" data-sizex="2" data-sizey="2">
       <div data-id="sidekiq" data-view="Sidekiq" data-title="Sidekiq" style=""></div>
     </li>
@@ -19,7 +19,7 @@ Add the widget HTML to your dashboard
 
 In `/jobs/sidekiq.rb` you need to configure the connection to your Redis server that backs Sidekiq.
 
-````
+```ruby
 require 'sidekiq/api'
 
 redis_uri = "redis://:#{YOUR_REDIS_PASSWORD}@#{YOUR_REDIS_HOST}:#{YOUR_REDIS_PORT}"
@@ -39,4 +39,4 @@ SCHEDULER.every '10s' do
   ]
   send_event('sidekiq', { metrics: metrics } )
 end
-````
+```

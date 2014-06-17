@@ -1,7 +1,7 @@
 # dashing-contrib 
 
 [![Build Status](https://travis-ci.org/QubitProducts/dashing-contrib.svg?branch=master)](https://travis-ci.org/QubitProducts/dashing-contrib)
-it gui
+
 
 This project is an extension to Shopify's Dashing. It aims to solve a couple of problems:
 

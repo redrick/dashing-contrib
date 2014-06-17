@@ -1,9 +1,11 @@
+require 'active_support/all'
 require 'dashing-contrib/version'
 require 'dashing-contrib/configuration'
 require 'dashing-contrib/history'
 require 'dashing-contrib/routes'
 require 'dashing-contrib/bottles/time'
 require 'dotenv'
+
 
 module DashingContrib
   class << self

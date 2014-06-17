@@ -1,6 +1,8 @@
 KueStatus Widget
 =====
 
+![](preview.png)
+
 A widget shows current status of [Kue](https://github.com/learnboost/kue) job queue.
 
 ## Usage

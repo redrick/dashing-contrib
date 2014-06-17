@@ -7,7 +7,7 @@ This project is an extension to Shopify's Dashing. It aims to solve a couple of 
  * A common way to load external configuration via dotenv
  * Central place keeping track of extension updates, commits and contributions from multiple sources
  
-You will be able to use dashing-contrib built-in widgets in this project after the installation steps.
+Read each individual widget documentation to use dashing-contrib built-in widgets in this project after the installation steps.
 
 ## Installation
 Add this line to your Dashing's dashboard Gemfile:

@@ -37,7 +37,7 @@ module DashingContrib
 
       private
       def get_request(uri)
-        response = RestClient.get("#{endpoinit}/#{uri}")
+        response = RestClient.get("#{endpoint}/#{uri}")
         MultiJson.load(response.body)
       end
 

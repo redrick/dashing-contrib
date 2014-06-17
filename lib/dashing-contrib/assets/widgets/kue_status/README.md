@@ -7,7 +7,7 @@ A widget shows current status of [Kue](https://github.com/learnboost/kue) job qu
 
 Add the widget HTML to your dashboard
 
-````
+```html
 <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
     <div data-id="kue-information" data-view="KueStatus" data-title="Kue information"></div>
 </li>
@@ -17,7 +17,7 @@ Add the widget HTML to your dashboard
 
 An example of `jobs/kue_status_job.rb`
 
-````
+```ruby
 # built-in Kue helpers
 require 'dashing-contrib/bottles/kue'
 

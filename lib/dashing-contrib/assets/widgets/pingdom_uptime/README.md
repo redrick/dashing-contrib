@@ -6,24 +6,25 @@ Pingdom Uptime
 
 ### Requirement
 
-The smile face requires font-awesome >= 4.1.0. dashing-contrib includes 4.1.0 CSS, you only need to [download](https://github.com/FortAwesome/Font-Awesome/tree/master/fonts) webfonts and replace generated fonts under `/assets/fonts` folder.
+The smile face requires font-awesome >= 4.1.0. dashing-contrib includes 4.1.0 CSS and load font from CDN. You can safely delete the fonts folder and font-awesome css files in generated dashing asset folder.
 
 ### Example html usage
 
-````
+```html
 <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
     <div data-view="PingdomUptime"
          data-id="pingdom-uptime"
          data-title="Dashboard"></div>
 </li>
-````
+```
 
 
 ### Example job
 
 This also shows a coupld of dashing-contrib data APIs for pingdom. 
 
-````
+```ruby
+# Some helper methods for pingdom
 require 'dashing-contrib/bottles/pingdom'
 
 SCHEDULER.every '30s' do
@@ -62,6 +63,6 @@ SCHEDULER.every '30s' do
   
   send_event("pingdom-uptime", data)
 end
-````
+```
 
 

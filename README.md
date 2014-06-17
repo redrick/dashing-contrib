@@ -57,6 +57,7 @@ These values can be accessed in jobs `ENV['NAGIOS_ENDPOINT']`
  * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph) made by [jwalton](https://github.com/jwalton)
  * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq) made by [pallan](https://github.com/pallan)
  * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/pingdom_uptime) inspired by [Edools](https://github.com/Edools/dashing-pingdom)
+ * [Kue Status](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/kue_status)
 
 ## Job Helpers Doc
 

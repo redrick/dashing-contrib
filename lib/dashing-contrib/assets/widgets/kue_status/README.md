@@ -34,6 +34,6 @@ SCHEDULER.every '10s' do
       { label: 'Queued',     value: stats[:inactive_count] },
       { label: 'Delayed',     value: stats[:delayed_count] }
   ]
-  send_event('experiment-stats-queue', { metrics: metrics } )
+  send_event('kue-information', { metrics: metrics } )
 end
 ````

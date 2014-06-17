@@ -70,11 +70,11 @@ $tick-color:        rgba(0, 0, 0, 0.4);
   .rickshaw_legend {
     position: absolute;
     left: 0px;
-    bottom: 0px;
+    bottom: -3px;
     white-space: nowrap;
     overflow-x: hidden;
     font-size: 15px;
-    height: 20px;
+    height: 30px;
 
     ul {
       margin: 0;
@@ -97,6 +97,7 @@ $tick-color:        rgba(0, 0, 0, 0.4);
     .label {
       display: inline-block;
       margin-left: 5px;
+      font-size: 12px;
     }
   }
 

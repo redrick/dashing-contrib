@@ -69,44 +69,48 @@ dashing-contrib gem provides a standard job definition wrapper. This replaces th
 
 A custom job declaration:
 
-    module MyCustomJob
-      # provides some dashing hooks 
-      extend DashingContrib::RunnableJob
-      
-      # Overrides to extract some data for display
-      # generated hash will be available for widget to access
-      def self.metrics(options)
-        { metrics: { failed: 500, ok: 123013 } }
-      end
-      
-      
-      # By default this always returns OK state
-      # You can customize the state return value by lookup generated metrics and user provided options 
-      def self.validate_state(metrics, options = {})
-        # `metrics` parameter is the value return by `metrics` method
-        failed_value = metrics[:metrics][:failed]
-        
-        return DashingContrib::RunnableJob::OK if failed_value == 0
-        return DashingContrib::RunnableJob::WARNING if failed_value <= 100
-        DashingContrib::RunnableJob::CRITICAL
-      end
-    end
+```ruby
+module MyCustomJob
+  # provides some dashing hooks 
+  extend DashingContrib::RunnableJob
+  
+  # Overrides to extract some data for display
+  # generated hash will be available for widget to access
+  def self.metrics(options)
+    { metrics: { failed: 500, ok: 123013 } }
+  end
+  
+  
+  # By default this always returns OK state
+  # You can customize the state return value by lookup generated metrics and user provided options 
+  def self.validate_state(metrics, options = {})
+    # `metrics` parameter is the value return by `metrics` method
+    failed_value = metrics[:metrics][:failed]
+    
+    return DashingContrib::RunnableJob::OK if failed_value == 0
+    return DashingContrib::RunnableJob::WARNING if failed_value <= 100
+    DashingContrib::RunnableJob::CRITICAL
+  end
+end
+```
 
 When using job:
 
-    # make sure this module is required
-    # default every 30s and job is executed once at start
-    MyCustomJob.run(event: 'custom-job-event', every: '20s')
-    
-    
-    # Custom job also has a block syntax if you are setting up some global settings
-    MyCustomJob.run(event: 'custom-job-event') do
-      # setup redis client etc
-    end
-    
-    # metrics and validate_state method will be able to use `my_custom_param` and `custom_threshold`
-    # to make configurable metrics fetch and state validation
-    MyCustomJob.run(event: 'custom-job-event', my_custom_param: 123, custom_threshold: 3)
+```ruby
+# make sure this module is required
+# default every 30s and job is executed once at start
+MyCustomJob.run(event: 'custom-job-event', every: '20s')
+
+
+# Custom job also has a block syntax if you are setting up some global settings
+MyCustomJob.run(event: 'custom-job-event') do
+  # setup redis client etc
+end
+
+# metrics and validate_state method will be able to use `my_custom_param` and `custom_threshold`
+# to make configurable metrics fetch and state validation
+MyCustomJob.run(event: 'custom-job-event', my_custom_param: 123, custom_threshold: 3)
+```
     
 This is nice that backend data fetching can be now unit tested and reused. Dashing widget view layer can reuse the same job processor and present data in multiple forms. 
 

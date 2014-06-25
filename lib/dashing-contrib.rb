@@ -4,6 +4,7 @@ require 'dashing-contrib/configuration'
 require 'dashing-contrib/history'
 require 'dashing-contrib/routes'
 require 'dashing-contrib/bottles/time'
+require 'dashing-contrib/runnable_job'
 require 'dotenv'
 
 

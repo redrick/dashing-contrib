@@ -15,7 +15,7 @@ Read each individual widget documentation to use dashing-contrib built-in widget
 ## Installation
 Add this line to your Dashing's dashboard Gemfile:
 
-    gem 'dashing-contrib', '~> 0.0.4'
+    gem 'dashing-contrib', '~> 0.0.5'
 
 And then execute:
 

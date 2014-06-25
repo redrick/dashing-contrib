@@ -94,6 +94,10 @@ module MyCustomJob
 end
 ```
 
+Take a look some build-in jobs:
+
+ * [dashing-contrib/jobs/sidekiq.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/sidekiq.rb)
+
 When using job:
 ```ruby
 # make sure MyCustomJob module is required

@@ -1,4 +1,5 @@
 require 'nagiosharder'
+require 'dashing-contrib/bottles/nagios/status'
 
 module DashingContrib
   module Nagios
@@ -7,6 +8,10 @@ module DashingContrib
 
       def initialize(options = {})
         @client = NagiosHarder::Site.new(options[:endpoint], options[:username], options[:password], options[:version], options[:time_format])
+      end
+
+      def status(options = {})
+        ::DashingContrib::Nagios::Status.fetch(client, options)
       end
     end
   end

@@ -24,7 +24,7 @@ module DashingContrib
 
         value = failed_stats[:value]
         return DashingContrib::RunnableJob::OK if value < user_options[:failed_warning_at]
-        return  DashingContrib::RunnableJob::WARNING if value >= user_options[:failed_warning_at] && value < user_options[:failed_critical_at]
+        return DashingContrib::RunnableJob::WARNING if value >= user_options[:failed_warning_at] && value < user_options[:failed_critical_at]
         DashingContrib::RunnableJob::CRITICAL
       end
     end

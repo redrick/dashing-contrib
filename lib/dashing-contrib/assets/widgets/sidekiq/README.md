@@ -26,9 +26,11 @@ Create a `jobs/sidekiq.rb` in your dashing project.
 require 'dashing-contrib/jobs/sidekiq'
 
 # Configure the job and setup Sidekiq connection
-DashingContrib::Jobs::Sidekiq.run every: '10s', event: 'sidekiq-namespace' do
+# 'event' is your dashing event name
+
+DashingContrib::Jobs::Sidekiq.run every: '10s', event: 'sidekiq-metric-name' do
   Sidekiq.configure_client do |config|
-    config.redis = { url: 'redis://localhost.com:6379', namespace: 'sidekiq:mdashboard' }
+    config.redis = { url: 'redis://localhost.com:6379', namespace: 'sidekiq:namespace' }
   end
 end
 ```

@@ -1,5 +1,4 @@
 require 'nagiosharder'
-require 'dashing-contrib/bottles/nagios/status'
 
 module DashingContrib
   module Nagios

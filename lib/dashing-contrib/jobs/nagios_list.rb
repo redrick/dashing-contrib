@@ -1,4 +1,5 @@
-require 'sidekiq/api'
+require 'dashing-contrib/bottles/nagios'
+
 module DashingContrib
   module Jobs
     module NagiosList

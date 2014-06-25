@@ -95,12 +95,10 @@ end
 ```
 
 When using job:
-
 ```ruby
-# make sure this module is required
-# default every 30s and job is executed once at start
+# make sure MyCustomJob module is required
+# default interval is every 30s and job is executed once at start
 MyCustomJob.run(event: 'custom-job-event', every: '20s')
-
 
 # Custom job also has a block syntax if you are setting up some global settings
 MyCustomJob.run(event: 'custom-job-event') do
@@ -111,6 +109,7 @@ end
 # to make configurable metrics fetch and state validation
 MyCustomJob.run(event: 'custom-job-event', my_custom_param: 123, custom_threshold: 3)
 ```
+
     
 This is nice that backend data fetching can be now unit tested and reused. Dashing widget view layer can reuse the same job processor and present data in multiple forms. 
 
@@ -122,6 +121,3 @@ There are a couple of ways to contribute. Brining those widgets scattered in git
  * Jobs utils, common Job data processing for graphing purpose 
  * Fix and add test
  * Improve documentation
-
-
-

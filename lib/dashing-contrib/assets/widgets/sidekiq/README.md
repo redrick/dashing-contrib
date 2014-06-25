@@ -15,28 +15,20 @@ Add the widget HTML to your dashboard
     </li>
 ```
 
-## Settings
+## Job setup
 
-In `/jobs/sidekiq.rb` you need to configure the connection to your Redis server that backs Sidekiq.
+Create a `jobs/sidekiq.rb` in your dashing project.
+
 
 ```ruby
-require 'sidekiq/api'
 
-redis_uri = "redis://:#{YOUR_REDIS_PASSWORD}@#{YOUR_REDIS_HOST}:#{YOUR_REDIS_PORT}"
+# Require a built-in job
+require 'dashing-contrib/jobs/sidekiq'
 
-Sidekiq.configure_client do |config|
-  config.redis = { url: redis_uri, namespace: 'myapp:namespace' }
-end
-
-SCHEDULER.every '10s' do
-  stats = Sidekiq::Stats.new
-  metrics = [
-      {label: 'Processed', value: stats.processed },
-      {label: 'Failed', value: stats.failed },
-      {label: 'Retries', value: stats.retry_size },
-      {label: 'Dead', value: stats.dead_size },
-      {label: 'Enqueued', value: stats.enqueued }
-  ]
-  send_event('sidekiq', { metrics: metrics } )
+# Configure the job and setup Sidekiq connection
+DashingContrib::Jobs::Sidekiq.run every: '10s', event: 'sidekiq-namespace' do
+  Sidekiq.configure_client do |config|
+    config.redis = { url: 'redis://localhost.com:6379', namespace: 'sidekiq:mdashboard' }
+  end
 end
 ```

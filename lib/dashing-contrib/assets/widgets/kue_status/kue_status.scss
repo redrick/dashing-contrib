@@ -2,17 +2,19 @@
   &.widget-kue-status {
     background: #f0f0f0;
     color: #636466;
-  }
 
-  ul {
-    margin: 0 15px;
-    text-align: left;
-    font-size: 22px;
+    ul {
+      margin: 0 15px;
+      text-align: left;
+      font-size: 22px;
 
-    li {
-      .value {
-        float: right;
+      li {
+        padding: 6px 0px;
+        .value {
+          float: right;
+        }
       }
     }
+
   }
 }

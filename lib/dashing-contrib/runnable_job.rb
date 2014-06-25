@@ -13,8 +13,13 @@ module DashingContrib
       user_options = _merge_options(options)
       event_name   = user_options.delete(:event)
       interval     = user_options.delete(:every)
+
+      rufus_opt = {
+        first_in: user_options[:first_in]
+      }
+
       block.call if block_given?
-      _scheduler.every interval, user_options do
+      _scheduler.every interval, rufus_opt do
         current_metrics = metrics(options)
         current_state   = validate_state(current_metrics, user_options)
         send_event(event_name, current_metrics.merge({ state: current_state }))

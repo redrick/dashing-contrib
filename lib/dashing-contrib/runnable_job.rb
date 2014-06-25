@@ -4,26 +4,47 @@
 #
 module DashingContrib
   module RunnableJob
+
     extend self
     WARNING  = 'warning'.freeze
     CRITICAL = 'critical'.freeze
     OK       = 'ok'.freeze
 
-    def run(options = {}, &block)
-      user_options = _merge_options(options)
-      event_name   = user_options.delete(:event)
-      interval     = user_options.delete(:every)
+    class Context
 
+      def initialize(interval, rufus_opts, event_name, user_options, this_module)
+        @interval = interval
+        @rufus_opts = rufus_opts
+        @event_name = event_name
+        @user_options = user_options
+        @this_module = this_module
+      end
+
+      def schedule!
+        _scheduler.every @interval, @rufus_opts do
+          current_metrics = @this_module.metrics(@user_options)
+          current_state   = @this_module.validate_state(current_metrics, @user_options)
+          send_event(@event_name, current_metrics.merge({ state: current_state }))
+        end
+      end
+
+      private
+      def _scheduler
+        SCHEDULER
+      end
+    end
+
+    def run(options = {}, &block)
+
+      user_options = _merge_options(options)
+      interval     = user_options.delete(:every)
       rufus_opt = {
         first_in: user_options[:first_in]
       }
 
+      event_name   = user_options.delete(:event)
       block.call if block_given?
-      _scheduler.every interval, rufus_opt do
-        current_metrics = metrics(options)
-        current_state   = validate_state(current_metrics, user_options)
-        send_event(event_name, current_metrics.merge({ state: current_state }))
-      end
+      Context.new(interval, rufus_opt, event_name, user_options, self).schedule!
     end
 
     # Overrides this method to fetch and generate metrics
@@ -44,10 +65,6 @@ module DashingContrib
     end
 
     private
-    def _scheduler
-      SCHEDULER
-    end
-
     def _merge_options(options)
       raise ':event String is required to identify a job name' if options[:event].nil?
       _default_scheduler_options.merge(options)

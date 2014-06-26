@@ -14,10 +14,12 @@ class Dashing.NagiosList extends Dashing.Widget
     @_groupBy(@get('ok'))
 
   ready: ->
+    node = $(@node)
     style = 'overflow': 'hidden'
     node.parent().css(style)
 
   clear: ->
+
 
   _groupBy: (items) ->
     maps = {}

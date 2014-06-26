@@ -1,7 +1,6 @@
 # Creates a overall framework to define a reusable job.
 #
 # A custom job module can extend `RunnableJob` and overrides `metrics` and `validate_state`
-#
 module DashingContrib
   module RunnableJob
 
@@ -77,4 +76,10 @@ module DashingContrib
       }
     end
   end
+end
+
+# dotenv doesn't seem to be loaded in dashing job
+unless defined?(Dotenv)
+  require 'dotenv'
+  Dotenv.load
 end

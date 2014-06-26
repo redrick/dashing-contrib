@@ -1,9 +1,18 @@
 require 'active_support/all'
 require 'dashing-contrib/version'
+
+# configuration helpers
 require 'dashing-contrib/configuration'
+
+# history module and overall states management
 require 'dashing-contrib/history'
-require 'dashing-contrib/routes'
+require 'dashing-contrib/bottles/dashing'
 require 'dashing-contrib/bottles/time'
+
+# additional routes
+require 'dashing-contrib/routes'
+
+# contrib job extension
 require 'dashing-contrib/runnable_job'
 require 'dotenv'
 

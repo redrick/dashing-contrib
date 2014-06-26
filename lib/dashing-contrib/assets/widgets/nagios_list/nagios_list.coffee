@@ -8,19 +8,16 @@ class Dashing.NagiosList extends Dashing.Widget
     @_groupBy(@get('critical'))
 
   @accessor 'warningMap', ->
-    console.log(@node)
     @_groupBy(@get('warning'))
 
   @accessor 'okMap', ->
     @_groupBy(@get('ok'))
 
   ready: ->
-    node = $(@node)
     style = 'overflow': 'hidden'
     node.parent().css(style)
 
   clear: ->
-
 
   _groupBy: (items) ->
     maps = {}

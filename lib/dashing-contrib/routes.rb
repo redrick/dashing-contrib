@@ -12,3 +12,10 @@ get '/views/:widget?.html' do
     return engines.first.new(contrib_file).render if File.exist? contrib_file
   end
 end
+
+get '/api/states' do
+  protected!
+  content_type :json
+
+  DashingContrib::Dashing.states.to_json
+end

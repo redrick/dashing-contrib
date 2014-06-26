@@ -23,7 +23,10 @@ module DashingContrib
         _scheduler.every @interval, @rufus_opts do
           current_metrics = @this_module.metrics(@user_options)
           current_state   = @this_module.validate_state(current_metrics, @user_options)
-          send_event(@event_name, current_metrics.merge({ state: current_state }))
+          # including title and state
+          additional_info = { state: current_state }
+          additional_info[:title] = @user_options[:title] if @user_options[:title]
+          send_event(@event_name, current_metrics.merge(additional_info))
         end
       end
 

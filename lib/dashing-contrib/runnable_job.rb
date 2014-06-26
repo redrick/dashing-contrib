@@ -34,6 +34,7 @@ module DashingContrib
     end
 
     def run(options = {}, &block)
+
       user_options = _merge_options(options)
       interval     = user_options.delete(:every)
       rufus_opt = {
@@ -75,4 +76,10 @@ module DashingContrib
       }
     end
   end
+end
+
+# dotenv doesn't seem to be loaded in dashing job
+unless defined?(Dotenv)
+  require 'dotenv'
+  Dotenv.load
 end

@@ -52,11 +52,11 @@ PINGDOM_API_KEY: pingpongpingpong
 
 These values can be accessed in jobs `ENV['NAGIOS_ENDPOINT']`
 
-## Widgets Doc
+## Built-in Widgets
 
- * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph) made by [jwalton](https://github.com/jwalton)
- * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq) made by [pallan](https://github.com/pallan)
- * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/pingdom_uptime) inspired by [Edools](https://github.com/Edools/dashing-pingdom)
+ * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph)
+ * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq)
+ * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/pingdom_uptime)
  * [Kue Status](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/kue_status)
 
 ## Job Definition
@@ -79,7 +79,6 @@ module MyCustomJob
   def self.metrics(options)
     { metrics: { failed: 500, ok: 123013 } }
   end
-  
   
   # By default this always returns OK state
   # You can customize the state return value by lookup generated metrics and user provided options 

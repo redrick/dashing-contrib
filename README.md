@@ -3,21 +3,23 @@
 [![Build Status](https://travis-ci.org/QubitProducts/dashing-contrib.svg?branch=master)](https://travis-ci.org/QubitProducts/dashing-contrib)
 
 
-This project is an extension to Shopify's Dashing. It aims to solve a couple of problems:
+This project is an extension to Shopify's Dashing. Including this rubygem you will be able to:
 
- * Extend the Dashing's widgets functionality in a healthy pattern
- * Embrace sharing, reusing, testing common jobs data manipulation functionality
- * A common way to load external configuration via dotenv
- * Central place keeping track of extension updates, commits and contributions from multiple sources
+ * Use all the built-in widgets
+ * Extend `DashingContrib::RunnableJob` module to define, test jobs
+ * Built-in jobs are only a couple of lines implementation, no repetitive copy and paste
+ * Existing secret parameters is automatically loaded from `.env` file
+ * All jobs have a final state (ok, warning, critical)
+ * Additional Rest API to get overall state summary
  
-Read each individual widget documentation to use dashing-contrib built-in widgets in this project after the installation steps.
+Read each individual widget documentation to use dashing-contrib built-in widgets after the installation steps.
 
 ## Installation
 Add this line to your Dashing's dashboard Gemfile:
 
-    gem 'dashing-contrib', '~> 0.0.5'
+    gem 'dashing-contrib', '~> 0.1.0'
 
-And then execute:
+Update dependencies:
 
     $ bundle
 
@@ -28,15 +30,23 @@ Add the following on top of the `config.ru`
     require 'dashing'
     DashingContrib.configure
     
-Add these lines to `assets/javascripts/application.coffee`
+Include built-in CoffeeScript to `assets/javascripts/application.coffee`
 
     #=require dashing-contrib/assets/widgets
 
-Add these lines to `assets/stylesheets/application.scss`
+Include built-in SCSS to `assets/stylesheets/application.scss`
 
     //=require dashing-contrib/assets/widgets
 
-## Job Parameters
+Now you will be able to use the following widgets, click to see individual documentation:
+
+ * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph)
+ * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq)
+ * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/pingdom_uptime)
+ * [Kue Status](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/kue_status)
+ * [Nagios List](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/nagios_list)
+
+## dotenv
 
 Shared job parameters are managed by `dotenv` gem. Add a `.env` file in your dashing project root. dashing-contrib will load your configuration from `.env` file automatically. An example `.env` file:
 
@@ -52,12 +62,6 @@ PINGDOM_API_KEY: pingpongpingpong
 
 These values can be accessed in jobs `ENV['NAGIOS_ENDPOINT']`
 
-## Built-in Widgets
-
- * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph)
- * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq)
- * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/pingdom_uptime)
- * [Kue Status](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/kue_status)
 
 ## Job Definition
 
@@ -67,7 +71,7 @@ dashing-contrib gem provides a standard job definition wrapper. This replaces th
  * in addition to dashing's default 'updatedAt', introduced an optional `state` information used across all widgets
  
 
-A custom job declaration:
+A custom job declaration example:
 
 ```ruby
 module MyCustomJob
@@ -93,10 +97,6 @@ module MyCustomJob
 end
 ```
 
-Take a look some build-in jobs:
-
- * [dashing-contrib/jobs/sidekiq.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/sidekiq.rb)
-
 When using job:
 ```ruby
 # make sure MyCustomJob module is required
@@ -113,8 +113,18 @@ end
 MyCustomJob.run(event: 'custom-job-event', my_custom_param: 123, custom_threshold: 3)
 ```
 
-    
+
+Take a look some build-in jobs as example:
+
+ * [dashing-contrib/jobs/sidekiq.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/sidekiq.rb)
+ * [dashing-contrib/jobs/kue.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/kue.rb)
+ * [dashing-contrib/jobs/nagios_list.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/nagios_list.rb)
+ * [dashing-contrib/jobs/pingdom_uptime.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/pingdom_uptime.rb)
+ * [dashing-contrib/jobs/dashing-state.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/dashing-state.rb)
+ 
 This is nice that backend data fetching can be now unit tested and reused. Dashing widget view layer can reuse the same job processor and present data in multiple forms. 
+
+
 
 ## How to contribute
 

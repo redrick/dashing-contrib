@@ -126,6 +126,34 @@ Take a look some build-in jobs as example:
 This is nice that backend data fetching can be now unit tested and reused. Dashing widget view layer can reuse the same job processor and present data in multiple forms. 
 
 
+# Widget State
+
+All built-in jobs managed by 'DashingContrib::Runnable' assumes each widget instance has a 'state' under ok, warning or critical. We suggest your custom widget should also follow this convension.
+
+This gem creates an additional REST API, as well as a widget to show a global healthness of the system. This is awesome if you would like to build some physical alert system around it.
+
+`GET http://{dashing_endpoing}/api/states`
+
+```json
+{
+    "ok": 2,
+    "warning": 0,
+    "critical": 0,
+    "detailed_status": {
+      "dashboard": {
+        "state": "ok",
+        "title": "Dashboard",
+        "updated_at": 1403823187
+      },
+      "nagios-list": {
+        "state": "ok",
+        "title": "Nagios Checks",
+        "updated_at": 1403823178
+      }
+    }
+}
+```
+
 
 ## How to contribute
 

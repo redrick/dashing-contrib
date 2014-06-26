@@ -41,10 +41,10 @@ Include built-in SCSS to `assets/stylesheets/application.scss`
 Now you will be able to use the following widgets, click to see individual documentation:
 
  * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/rickshawgraph)
- * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/sidekiq)
- * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/pingdom_uptime)
- * [Kue Status](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/kue_status)
- * [Nagios List](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/nagios_list)
+ * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Sidekiq)
+ * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Pingdom-Uptime)
+ * Kue Status
+ * Nagios List
  * Dashing State
 
 ## dotenv

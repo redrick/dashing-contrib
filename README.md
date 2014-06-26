@@ -43,9 +43,9 @@ Now you will be able to use the following widgets, click to see individual docum
  * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Rickshawgraph)
  * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Sidekiq)
  * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Pingdom-Uptime)
- * Kue Status
- * Nagios List
- * Dashing State
+ * [Kue Status](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Kue-Status)
+ * [Nagios List](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Nagios-List)
+ * Dashing State (global alert if any widget is under critical state)
 
 ## dotenv
 

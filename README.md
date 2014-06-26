@@ -45,6 +45,7 @@ Now you will be able to use the following widgets, click to see individual docum
  * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/pingdom_uptime)
  * [Kue Status](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/kue_status)
  * [Nagios List](https://github.com/QubitProducts/dashing-contrib/tree/master/lib/dashing-contrib/assets/widgets/nagios_list)
+ * Dashing State
 
 ## dotenv
 

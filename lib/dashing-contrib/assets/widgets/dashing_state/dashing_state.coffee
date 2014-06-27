@@ -1,11 +1,10 @@
 class Dashing.DashingState extends Dashing.Widget
-  @accessor 'items', ->
+
+  onData: (data) ->
     items = []
-    for key, item of @detailed_status
+    for key, item of data.detailed_status
       items = items.concat(item)
 
-    return items
-
-
+    @items = items
 
 

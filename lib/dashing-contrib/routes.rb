@@ -19,3 +19,11 @@ get '/api/states' do
 
   DashingContrib::Dashing.states.to_json
 end
+
+post '/api/history/save' do
+  protected!
+  content_type :json
+
+  DashingContrib::History.save
+  { message: 'done' }
+end

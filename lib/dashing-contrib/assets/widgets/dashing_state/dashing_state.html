@@ -17,8 +17,8 @@
 
     </div>
     <ul>
-        <li data-foreach-item="items" data-bind-class="item.state | prepend 'item-state-'">
-            <span data-bind="item.title"></span>
+        <li data-foreach-state="widgetStates" data-bind-class="state.state | prepend 'item-state-'">
+            <span data-bind="state.title"></span>
         </li>
     </ul>
 </div>

@@ -132,7 +132,7 @@ All built-in jobs managed by 'DashingContrib::Runnable' assumes each widget inst
 
 This gem creates an additional REST API, as well as a widget to show a global healthness of the system. This is awesome if you would like to build some physical alert system around it.
 
-`GET http://{dashing_endpoing}/api/states`
+`GET http://{dashing_endpoint}/api/states`
 
 ```json
 {
@@ -153,6 +153,12 @@ This gem creates an additional REST API, as well as a widget to show a global he
     }
 }
 ```
+
+# Persistent History
+
+A new REST endpoint allows to force keep a snapshot of current events data and update the history.yml yaml file. 
+
+`Post http://{dashing_endpoint}/api/history/save`
 
 
 ## How to contribute

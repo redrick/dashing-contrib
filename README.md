@@ -10,7 +10,8 @@ This project is an extension to Shopify's Dashing. Including this rubygem you wi
  * Built-in jobs are only a couple of lines implementation, no repetitive copy and paste
  * Existing secret parameters is automatically loaded from `.env` file
  * All jobs have a final state (ok, warning, critical)
- * Additional Rest API to get overall state summary
+ * Rest API to get overall state summary
+ * Rest API to trigger save history
  
 Read each individual widget documentation to use dashing-contrib built-in widgets after the installation steps.
 

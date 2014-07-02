@@ -46,6 +46,7 @@ Now you will be able to use the following widgets, click to see individual docum
  * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Pingdom-Uptime)
  * [Kue Status](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Kue-Status)
  * [Nagios List](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Nagios-List)
+ * [Switcher](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Switcher)
  * Dashing State (global alert if any widget is under critical state)
 
 ## dotenv

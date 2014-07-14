@@ -18,7 +18,7 @@ Read each individual widget documentation to use dashing-contrib built-in widget
 ## Installation
 Add this line to your Dashing's dashboard Gemfile:
 
-    gem 'dashing-contrib', '~> 0.1.3'
+    gem 'dashing-contrib', '~> 0.1.4'
 
 Update dependencies:
 
@@ -26,7 +26,7 @@ Update dependencies:
 
 Add the following on top of the `config.ru`
 
-    $: << File.expand_path('./lib', __dir__)
+    $: << File.expand_path('./lib', File.dirname(__FILE__))
     require 'dashing-contrib'
     require 'dashing'
     DashingContrib.configure

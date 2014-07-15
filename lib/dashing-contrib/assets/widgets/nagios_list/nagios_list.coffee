@@ -1,8 +1,8 @@
 class Dashing.NagiosList extends Dashing.Widget
   @accessor 'hasCritical', ->
-    if (@get('critical').length > 0) then true else false
+    if (@get('critical') && @get('critical').length > 0) then true else false
   @accessor 'hasWarning', ->
-    if (@get('warning').length > 0) then true else false
+    if (@get('warning') && @get('warning').length > 0) then true else false
 
   @accessor 'criticalMap', ->
     @_groupBy(@get('critical'))

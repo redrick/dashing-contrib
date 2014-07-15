@@ -23,6 +23,7 @@ class Dashing.NagiosList extends Dashing.Widget
 
   _groupBy: (items) ->
     maps = {}
+    items = items || []
     for item, index in items
       item.last_check = @_parseTime(item.last_check)
       if !maps[item.host]

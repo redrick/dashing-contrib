@@ -12,7 +12,7 @@ class DashboardSwitcher
     names = $('[data-switcher-dashboards]').first().attr('data-switcher-dashboards') || ''
     if names.length > 1
       # Get names separated with comma or space
-      @dashboardNames = (name.trim() for name in names.sub(' ', ',').split(','))
+      @dashboardNames = (name.trim() for name in names.split(/[ ,]+/).filter(Boolean))
 
   start: (interval=60000) ->
     self = @

@@ -140,8 +140,8 @@ class Dashing.Rickshawgraph extends Dashing.Widget
     }
 
     if !!@get('stroke') then graphOptions.stroke = true
-    if @get('min') != null then graphOptions.min = @get('min')
-    if @get('max') != null then graphOptions.max = @get('max')
+    if @get('min') != null && @get('min') != undefined then graphOptions.min = @get('min')
+    if @get('max') != null && @get('max') != undefined then graphOptions.max = @get('max')
 
     try
       graph = new Rickshaw.Graph graphOptions

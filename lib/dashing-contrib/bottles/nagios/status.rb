@@ -7,9 +7,10 @@ module DashingContrib
         critical = client.service_status(default_critical_options.merge(options))
         warning  = client.service_status(default_warning_options.merge(options))
         ok       = client.service_status(default_ok_options.merge(options))
+        unknown  = client.service_status(default_unknown_options.merge(options))
         ok.select! { |check| check['status'] == 'OK' }
 
-        { critical: critical, warning: warning, ok: ok }
+        { critical: critical, warning: warning, unknown: unknown, ok: ok }
       end
 
       private
@@ -19,6 +20,10 @@ module DashingContrib
 
       def default_warning_options
         { :service_status_types => [:warning], :sort_type => :descending, :sort_option => :last_check }
+      end
+
+      def default_unknown_options
+        { :service_status_types => [:unknown], :sort_type => :descending, :sort_option => :last_check }
       end
 
       def default_ok_options

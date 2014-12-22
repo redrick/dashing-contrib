@@ -92,12 +92,18 @@ class WidgetSwitcher
 #   - show the name of the next dashboard
 #   - add controls for manually cycling through dashboards
 class SwitcherControls
+  arrowContent = "&#65515;"
+  stopTimerContent = "stop timer"
+
   constructor: (interval=60000, nextDashboardName) ->
     @currentTime = parseInt(interval, 10)
     @interval = parseInt(interval, 10)
     @$elements = $('#dc-switcher-controls')
     @nextDashboardName = nextDashboardName
     @incrementTime = 1000 # refresh every 1000 milliseconds
+    @arrowContent = @$elements.data('arrow-content') || SwitcherControls.arrowContent
+    @stopTimerContent = @$elements.data('stop-timer-content') || SwitcherControls.stopTimerContent
+    @
 
   present: () ->
     @$elements.length
@@ -105,14 +111,23 @@ class SwitcherControls
   start: () ->
     @addElements()
     @$timer = $.timer(@updateTimer, @incrementTime, true)
+    @paused = false
 
   addElements: () ->
     @$nextDashboardNameContainer = $("<span id='dc-switcher-next-name'></span>")
     @$countdown = $("<span id='dc-switcher-countdown'></span>")
-    manualSwitcher = $("<span id='dc-switcher-arrow'>&ensp;&#65515;</span>")
-    @$elements.append(@$nextDashboardNameContainer).append(@$countdown).append(manualSwitcher).click( () =>
-      location.href = "/#{@nextDashboardName}"
-    )
+    @$manualSwitcher = $("<span id='dc-switcher-arrow' class='fa fa-forward'></span>").
+      html(@arrowContent).
+      click () =>
+        location.href = "/#{@nextDashboardName}"
+    @$switcherStopper = $("<span id='dc-switcher-stopper' class='fa fa-pause'></span>").
+      html(@stopTimerContent).
+      click(@pause)
+    @$elements.
+      append(@$nextDashboardNameContainer).
+      append(@$countdown).
+      append(@$manualSwitcher).
+      append(@$switcherStopper)
 
   formatTime: (time) ->
     time = time / 10;
@@ -125,6 +140,13 @@ class SwitcherControls
     while str.length < length
       str = "0#{str}"
     str
+
+  pause: () =>
+    @$timer.toggle()
+    if @$switcherStopper.hasClass('fa-pause')
+      @$switcherStopper.removeClass('fa-pause').addClass('fa-play')
+    else
+      @$switcherStopper.removeClass('fa-play').addClass('fa-pause')
 
   resetCountdown: () ->
     # Get time from form
@@ -144,7 +166,7 @@ class SwitcherControls
 
     # If timer is complete, trigger alert
     if @currentTime is 0
-      @$timer.stop()
+      @pause()
       @resetCountdown()
       return
 
@@ -153,9 +175,9 @@ class SwitcherControls
     if @currentTime < 0
       @currentTime = 0
 
-
 # Dashboard loaded and ready
 Dashing.on 'ready', ->
+  window.SwitcherControls = SwitcherControls
   # If multiple widgets per list item, switch them periodically
   $('.gridster li').each (index, listItem) ->
     $listItem = $(listItem)

@@ -95,7 +95,7 @@ class SwitcherControls
   constructor: (interval=60000, nextDashboardName) ->
     @currentTime = parseInt(interval, 10)
     @interval = parseInt(interval, 10)
-    @$elements = $('#switcher-controls')
+    @$elements = $('#dc-switcher-controls')
     @nextDashboardName = nextDashboardName
     @incrementTime = 1000 # refresh every 1000 milliseconds
 
@@ -109,7 +109,7 @@ class SwitcherControls
   addElements: () ->
     @$nextDashboardNameContainer = $("<span id='dc-switcher-next-name'></span>")
     @$countdown = $("<span id='dc-switcher-countdown'></span>")
-    manualSwitcher = $("<span id='dc-switcher-manual-switcher'>&ensp;&#65515;</span>")
+    manualSwitcher = $("<span id='dc-switcher-arrow'>&ensp;&#65515;</span>")
     @$elements.append(@$nextDashboardNameContainer).append(@$countdown).append(manualSwitcher).click( () =>
       location.href = "/#{@nextDashboardName}"
     )

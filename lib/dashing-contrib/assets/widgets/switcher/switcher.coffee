@@ -15,12 +15,17 @@ class DashboardSwitcher
       @dashboardNames = (name.trim() for name in names.split(/[ ,]+/).filter(Boolean))
 
   start: (interval=60000) ->
+    interval = parseInt(interval, 10)
     self = @
     @maxPos = @dashboardNames.length - 1
 
     # Skip switching if no names defined
     if @dashboardNames.length == 0
       return
+
+    @switcherControls = new SwitcherControls(interval)
+    if @switcherControls.present()
+      @switcherControls.start()
 
     # Take the dashboard name from that last part of the path
     pathParts = window.location.pathname.split('/')
@@ -43,7 +48,7 @@ class DashboardSwitcher
       self.curName = self.dashboardNames[self.curPos]
       window.location.pathname = "/#{self.curName}"
 
-    , parseInt(interval, 10))
+    , interval)
 
 
 # Switches (hides and shows) elements within on list item
@@ -57,6 +62,7 @@ class DashboardSwitcher
 class WidgetSwitcher
   constructor: (@elements) ->
     @$elements = $(elements)
+    @incrementTime = 1000 # refresh every 1000 milliseconds
 
   start: (interval=5000) ->
     self = @
@@ -82,6 +88,58 @@ class WidgetSwitcher
   stop: () ->
     clearInterval(@handle)
 
+class SwitcherControls
+  constructor: (interval=60000) ->
+    @currentTime = parseInt(interval, 10)
+    @interval = parseInt(interval, 10)
+    @$elements = $('.switcher-controls')
+
+  present: () ->
+    @$elements.length
+
+  start: () ->
+    @addElements()
+    @$timer = $.timer(@updateTimer, @incrementTime, true)
+
+  addElements: () ->
+    @$countdown = $("<span id='countdown'>00:00</span>")
+    @$elements.append(@countdown)
+
+  formatTime: (time) ->
+    time = time / 10;
+    min = parseInt(time / 6000, 10),
+    sec = parseInt(time / 100, 10) - (min * 60)
+    "#{(if min > 0 then pad(min, 2) else "00")}:#{pad(sec, 2)}"
+
+  pad: -> (number, length) {
+    str = "#{number}"
+    while (str.length < length)
+      str = '0' + str
+    str
+
+  resetCountdown = function() {
+    # Get time from form
+    newTime = @interval
+    if newTime > 0
+      @currentTime = newTime
+
+    # Stop and reset timer
+    @$timer.stop().once()
+
+  updateTimer: () ->
+    # Output timer position
+    timeString = formatTime(currentTime)
+    @$countdown.html(timeString)
+
+    # If timer is complete, trigger alert
+    if @currentTime is 0
+      @$timer.stop()
+      @resetCountdown()
+      return
+
+    # Increment timer position
+    @currentTime -= @incrementTime
+    if (@currentTime < 0) @currentTime = 0
 
 # Dashboard loaded and ready
 Dashing.on 'ready', ->

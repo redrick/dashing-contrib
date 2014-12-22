@@ -28,14 +28,14 @@ class DashboardSwitcher
     @curName = pathParts[pathParts.length - 1]
     @curPos = @dashboardNames.indexOf(@curName)
 
-    # instantiate switcher controls for countdown and manual switching
-    @switcherControls = new SwitcherControls(interval, @dashboardNames, @curName)
-    @switcherControls.start() if @switcherControls.present()
-
     # If not found, default to first
     if @curPos == -1
       @curPos = 0
       @curName = @dashboardNames[@curPos]
+
+    # instantiate switcher controls for countdown and manual switching
+    @switcherControls = new SwitcherControls(interval, @dashboardNames[@curPos + 1] || @dashboardNames[0])
+    @switcherControls.start() if @switcherControls.present()
 
     # Start loop
     @handle = setTimeout(() ->
@@ -62,7 +62,6 @@ class DashboardSwitcher
 class WidgetSwitcher
   constructor: (@elements) ->
     @$elements = $(elements)
-    @incrementTime = 1000 # refresh every 1000 milliseconds
 
   start: (interval=5000) ->
     self = @
@@ -93,12 +92,12 @@ class WidgetSwitcher
 #   - show the name of the next dashboard
 #   - add controls for manually cycling through dashboards
 class SwitcherControls
-  constructor: (interval=60000, dashboardNames, currentDashboardName) ->
+  constructor: (interval=60000, nextDashboardName) ->
     @currentTime = parseInt(interval, 10)
     @interval = parseInt(interval, 10)
     @$elements = $('#switcher-controls')
-    @currentDashboardName = currentDashboardName
-    @dashboardNames = dashboardNames
+    @nextDashboardName = nextDashboardName
+    @incrementTime = 1000 # refresh every 1000 milliseconds
 
   present: () ->
     @$elements.length
@@ -108,16 +107,20 @@ class SwitcherControls
     @$timer = $.timer(@updateTimer, @incrementTime, true)
 
   addElements: () ->
-    @$countdown = $("<span id='countdown'>00:00</span>")
-    @$elements.append(@countdown)
+    @$nextDashboardNameContainer = $("<span id='dc-switcher-next-name'></span>")
+    @$countdown = $("<span id='dc-switcher-countdown'></span>")
+    manualSwitcher = $("<span id='dc-switcher-manual-switcher'>&ensp;&#65515;</span>")
+    @$elements.append(@$nextDashboardNameContainer).append(@$countdown).append(manualSwitcher).click( () =>
+      location.href = "/#{@nextDashboardName}"
+    )
 
   formatTime: (time) ->
     time = time / 10;
-    min = parseInt(time / 6000, 10),
+    min = parseInt(time / 6000, 10)
     sec = parseInt(time / 100, 10) - (min * 60)
-    "#{(if min > 0 then pad(min, 2) else "00")}:#{pad(sec, 2)}"
+    "#{(if min > 0 then @pad(min, 2) else "00")}:#{@pad(sec, 2)}"
 
-  pad: -> (number, length) {
+  pad: (number, length) =>
     str = "#{number}"
     while str.length < length
       str = "0#{str}"
@@ -132,9 +135,11 @@ class SwitcherControls
     # Stop and reset timer
     @$timer.stop().once()
 
-  updateTimer: () ->
+  updateTimer: () =>
+    # Update dashboard name
+    @$nextDashboardNameContainer.text("Next dashboard: #{@nextDashboardName} in ")
     # Output timer position
-    timeString = formatTime(currentTime)
+    timeString = @formatTime(@currentTime)
     @$countdown.html(timeString)
 
     # If timer is complete, trigger alert
@@ -145,7 +150,9 @@ class SwitcherControls
 
     # Increment timer position
     @currentTime -= @incrementTime
-    if (@currentTime < 0) @currentTime = 0
+    if @currentTime < 0
+      @currentTime = 0
+
 
 # Dashboard loaded and ready
 Dashing.on 'ready', ->

@@ -23,14 +23,14 @@ class DashboardSwitcher
     if @dashboardNames.length == 0
       return
 
-    @switcherControls = new SwitcherControls(interval)
-    if @switcherControls.present()
-      @switcherControls.start()
-
     # Take the dashboard name from that last part of the path
     pathParts = window.location.pathname.split('/')
     @curName = pathParts[pathParts.length - 1]
     @curPos = @dashboardNames.indexOf(@curName)
+
+    # instantiate switcher controls for countdown and manual switching
+    @switcherControls = new SwitcherControls(interval, @dashboardNames, @curName)
+    @switcherControls.start() if @switcherControls.present()
 
     # If not found, default to first
     if @curPos == -1
@@ -88,11 +88,17 @@ class WidgetSwitcher
   stop: () ->
     clearInterval(@handle)
 
+# Adds a countdown timer to show when next dashboard will appear
+# TODO:
+#   - show the name of the next dashboard
+#   - add controls for manually cycling through dashboards
 class SwitcherControls
-  constructor: (interval=60000) ->
+  constructor: (interval=60000, dashboardNames, currentDashboardName) ->
     @currentTime = parseInt(interval, 10)
     @interval = parseInt(interval, 10)
-    @$elements = $('.switcher-controls')
+    @$elements = $('#switcher-controls')
+    @currentDashboardName = currentDashboardName
+    @dashboardNames = dashboardNames
 
   present: () ->
     @$elements.length
@@ -113,8 +119,8 @@ class SwitcherControls
 
   pad: -> (number, length) {
     str = "#{number}"
-    while (str.length < length)
-      str = '0' + str
+    while str.length < length
+      str = "0#{str}"
     str
 
   resetCountdown: () ->

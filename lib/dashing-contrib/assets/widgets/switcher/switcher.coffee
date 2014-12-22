@@ -117,7 +117,7 @@ class SwitcherControls
       str = '0' + str
     str
 
-  resetCountdown = function() {
+  resetCountdown: () ->
     # Get time from form
     newTime = @interval
     if newTime > 0

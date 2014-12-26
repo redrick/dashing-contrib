@@ -129,11 +129,12 @@ class DashboardSwitcherControls
     @$timer = $.timer(@updateTimer, @incrementTime, true)
 
   addElements: () ->
-    template = @$elements.find('template')
+    template = @$elements.find('dashboard-name-template')
     if template.length
       @$nextDashboardNameTemplate = template
+      @$nextDashboardNameTemplate.remove()
     else
-      @$nextDashboardNameTemplate = $("<template>Next dashboard: $nextName in </template>")
+      @$nextDashboardNameTemplate = $("<dashboard-name-template>Next dashboard: $nextName in </dashboard-name-template>")
     @$nextDashboardNameContainer = $("<span id='dc-switcher-next-name'></span>")
     @$countdown = $("<span id='dc-switcher-countdown'></span>")
     @$manualSwitcher = $("<span id='dc-switcher-next' class='fa fa-forward'></span>").

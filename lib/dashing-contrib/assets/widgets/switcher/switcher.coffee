@@ -16,7 +16,6 @@ class DashboardSwitcher
 
   start: (interval=60000) ->
     interval = parseInt(interval, 10)
-    self = @
     @maxPos = @dashboardNames.length - 1
 
     # Skip switching if no names defined
@@ -34,10 +33,13 @@ class DashboardSwitcher
       @curName = @dashboardNames[@curPos]
 
     # instantiate switcher controls for countdown and manual switching
-    @switcherControls = new SwitcherControls(interval, @dashboardNames[@curPos + 1] || @dashboardNames[0])
+    @switcherControls = new DashboardSwitcherControls(interval, @)
     @switcherControls.start() if @switcherControls.present()
 
-    # Start loop
+    @startLoop(interval)
+
+  startLoop: (interval) ->
+    self = @
     @handle = setTimeout(() ->
       # Increase the position or reset back to zero
       self.curPos += 1
@@ -49,6 +51,18 @@ class DashboardSwitcher
       window.location.pathname = "/#{self.curName}"
 
     , interval)
+
+  stopLoop: () ->
+    clearTimeout @handle
+
+  currentName: () ->
+    @curName
+
+  nextName: () ->
+    @dashboardNames[@curPos + 1] || @dashboardNames[0]
+
+  previousName: () ->
+    @dashboardNames[@curPos - 1] || @dashboardNames[@dashboardNames.length - 1]
 
 
 # Switches (hides and shows) elements within on list item
@@ -91,18 +105,20 @@ class WidgetSwitcher
 # TODO:
 #   - show the name of the next dashboard
 #   - add controls for manually cycling through dashboards
-class SwitcherControls
+class DashboardSwitcherControls
   arrowContent = "&#65515;"
   stopTimerContent = "stop timer"
+  startTimerContent = "start timer"
 
-  constructor: (interval=60000, nextDashboardName) ->
+  constructor: (interval=60000, dashboardSwitcher) ->
     @currentTime = parseInt(interval, 10)
     @interval = parseInt(interval, 10)
     @$elements = $('#dc-switcher-controls')
-    @nextDashboardName = nextDashboardName
+    @dashboardSwitcher = dashboardSwitcher
     @incrementTime = 1000 # refresh every 1000 milliseconds
-    @arrowContent = @$elements.data('arrow-content') || SwitcherControls.arrowContent
-    @stopTimerContent = @$elements.data('stop-timer-content') || SwitcherControls.stopTimerContent
+    @arrowContent = @$elements.data('next-dashboard-content') || DashboardSwitcherControls.arrowContent
+    @stopTimerContent = @$elements.data('stop-timer-content') || DashboardSwitcherControls.stopTimerContent
+    @startTimerContent = @$elements.data('start-timer-content') || DashboardSwitcherControls.startTimerContent
     @
 
   present: () ->
@@ -111,16 +127,20 @@ class SwitcherControls
   start: () ->
     @addElements()
     @$timer = $.timer(@updateTimer, @incrementTime, true)
-    @paused = false
 
   addElements: () ->
+    template = @$elements.find('template')
+    if template.length
+      @$nextDashboardNameTemplate = template
+    else
+      @$nextDashboardNameTemplate = $("<template>Next dashboard: $nextName in </template>")
     @$nextDashboardNameContainer = $("<span id='dc-switcher-next-name'></span>")
     @$countdown = $("<span id='dc-switcher-countdown'></span>")
-    @$manualSwitcher = $("<span id='dc-switcher-arrow' class='fa fa-forward'></span>").
+    @$manualSwitcher = $("<span id='dc-switcher-next' class='fa fa-forward'></span>").
       html(@arrowContent).
       click () =>
-        location.href = "/#{@nextDashboardName}"
-    @$switcherStopper = $("<span id='dc-switcher-stopper' class='fa fa-pause'></span>").
+        location.href = "/#{@dashboardSwitcher.nextName()}"
+    @$switcherStopper = $("<span id='dc-switcher-pause-reset' class='fa fa-pause'></span>").
       html(@stopTimerContent).
       click(@pause)
     @$elements.
@@ -143,10 +163,15 @@ class SwitcherControls
 
   pause: () =>
     @$timer.toggle()
-    if @$switcherStopper.hasClass('fa-pause')
-      @$switcherStopper.removeClass('fa-pause').addClass('fa-play')
+    if @isRunning()
+      @dashboardSwitcher.stopLoop()
+      @$switcherStopper.removeClass('fa-pause').addClass('fa-play').html(@startTimerContent)
     else
-      @$switcherStopper.removeClass('fa-play').addClass('fa-pause')
+      @dashboardSwitcher.startLoop @currentTime
+      @$switcherStopper.removeClass('fa-play').addClass('fa-pause').html(@stopTimerContent)
+
+  isRunning: () =>
+    @$switcherStopper.hasClass('fa-pause')
 
   resetCountdown: () ->
     # Get time from form
@@ -159,7 +184,9 @@ class SwitcherControls
 
   updateTimer: () =>
     # Update dashboard name
-    @$nextDashboardNameContainer.text("Next dashboard: #{@nextDashboardName} in ")
+    @$nextDashboardNameContainer.html(
+      @$nextDashboardNameTemplate.html().replace('$nextName', @dashboardSwitcher.nextName())
+    )
     # Output timer position
     timeString = @formatTime(@currentTime)
     @$countdown.html(timeString)
@@ -177,7 +204,6 @@ class SwitcherControls
 
 # Dashboard loaded and ready
 Dashing.on 'ready', ->
-  window.SwitcherControls = SwitcherControls
   # If multiple widgets per list item, switch them periodically
   $('.gridster li').each (index, listItem) ->
     $listItem = $(listItem)

@@ -37,12 +37,16 @@ module DashingContrib
     end
 
     def run(options = {}, &block)
-
       user_options = _merge_options(options)
       interval     = user_options.delete(:every)
+      scheduler_opts = user_options.delete(:scheduler) || {}
+
+      ## Keep this for compatibility.
+      #   Note: :first_in inside the :scheduler hash will override this.
       rufus_opt = {
         first_in: user_options[:first_in]
       }
+      rufus_opt.merge!(scheduler_opts)
 
       event_name   = user_options.delete(:event)
       block.call if block_given?

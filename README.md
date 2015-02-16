@@ -114,6 +114,10 @@ end
 # metrics and validate_state method will be able to use `my_custom_param` and `custom_threshold`
 # to make configurable metrics fetch and state validation
 MyCustomJob.run(event: 'custom-job-event', my_custom_param: 123, custom_threshold: 3)
+
+
+# Override rufus-scheduler configuraiton using scheduler hash settings
+MyCustomJob.run(event: 'custom-job-event', my_custom_param: 123, custom_threshold: 3, scheduler: { first_in: 10 })
 ```
 
 

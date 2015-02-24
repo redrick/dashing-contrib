@@ -18,7 +18,7 @@ Read each individual widget documentation to use dashing-contrib built-in widget
 ## Installation
 Requires Ruby >= 1.9.3. Add this line to your Dashing's dashboard Gemfile:
 
-    gem 'dashing-contrib', '~> 0.1.6'
+    gem 'dashing-contrib', '~> 0.1.7'
 
 Update dependencies:
 

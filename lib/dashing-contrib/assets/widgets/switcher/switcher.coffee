@@ -75,7 +75,7 @@ class DashboardSwitcher
 # Supports optional switcher interval, defaults to 5sec
 class WidgetSwitcher
   constructor: (@elements) ->
-    @$elements = $(elements)
+    @$elements = $(@elements)
 
   start: (interval=5000) ->
     self = @

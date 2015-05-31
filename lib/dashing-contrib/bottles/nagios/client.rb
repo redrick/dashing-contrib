@@ -6,7 +6,7 @@ module DashingContrib
       attr_reader :client
 
       def initialize(options = {})
-        @client = NagiosHarder::Site.new(options[:endpoint], options[:username], options[:password], options[:version], options[:time_format])
+        @client = NagiosHarder::Site.new(options[:endpoint], options[:username], options[:password], options[:version], options[:time_format], options[:verify_ssl])
       end
 
       def status(options = {})

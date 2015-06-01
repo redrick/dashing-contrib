@@ -18,7 +18,8 @@ module DashingContrib
           endpoint: options[:endpoint],
           password: options[:password],
           version: options[:version] || 3,
-          time_format: options[:time_format] || 'iso8601'
+          time_format: options[:time_format] || 'iso8601',
+          verify_ssl: options[:verify_ssl] || true,
         })
 
         client.status(options[:nagios_filter] || {})

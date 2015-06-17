@@ -43,7 +43,7 @@ module DashingContrib
       def self.default_date_ranges
         now_time = ::Time.now.to_i
         t24_hours  = 86400
-        t1_month   = t24_hours * 4
+        t1_month   = t24_hours * 7 * 4
         {
           now: now_time,
           default_date_range: now_time - t24_hours,

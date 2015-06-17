@@ -8,7 +8,12 @@ module DashingContrib
       extend self
 
       def calc(credentials, id, from_time, to_time, rounding = 2)
-        payload = make_request(credentials, id, from_time, to_time)
+        checks  = ::DashingContrib::Pingdom::Checks.fetch(credentials, id)
+        used_from_time = from_time
+        if checks[:check][:created] > from_time
+          used_from_time = checks[:check][:created]
+        end
+        payload = make_request(credentials, id, used_from_time, to_time)
         summary = payload[:summary][:status]
         up     = summary[:totalup]
         unkown = summary[:totalunknown]

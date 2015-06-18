@@ -20,7 +20,7 @@ module DashingContrib
         second_uptime  = client.uptime(id, user_opt[:second_date_range], user_opt[:now])
         status   = client.checks(id)
 
-        if status[:check][:lasterrortime].nil ?
+        if status[:check][:lasterrortime].nil?
           last_down = "never"
         else
           last_down = ::DashingContrib::Time.readable_diff(::Time.at(status[:check][:lasterrortime]))

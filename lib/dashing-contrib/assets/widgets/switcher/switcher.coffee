@@ -203,6 +203,11 @@ class DashboardSwitcherControls
     if @currentTime < 0
       @currentTime = 0
 
+# Expose our API
+Dashing.DashboardSwitcher = DashboardSwitcher
+Dashing.WidgetSwitcher = WidgetSwitcher
+Dashing.DashboardSwitcherControls = DashboardSwitcherControls
+
 # Dashboard loaded and ready
 Dashing.on 'ready', ->
   # If multiple widgets per list item, switch them periodically

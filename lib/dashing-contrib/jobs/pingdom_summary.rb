@@ -28,6 +28,12 @@ module DashingContrib
         tofind = options[:list_top] || 3
         list = Array.new
 
+ 	stateMap = { 'up' => 'ok',
+                     'paused' => 'ok',
+                     'unknown' => 'warning',
+                     'down' => 'critical',
+                     'unconfirmed_down' => 'critical' }
+
         repStates = ["down","unconfirmed_down","unknown","paused"]
         repStates.insert(-1, "up") if options[:include_up] || false
         repStates.each { |state| 
@@ -35,7 +41,7 @@ module DashingContrib
             touse =  status[state][:checks].keys.sort.take(tofind)
             tofind = tofind - touse.size
             touse.each { |key|
-              list.concat( [ { state: state, label: status[state][:checks][key] } ] )
+              list.concat( [ { state: stateMap[state], label: status[state][:checks][key] } ] )
             }
           end
         }

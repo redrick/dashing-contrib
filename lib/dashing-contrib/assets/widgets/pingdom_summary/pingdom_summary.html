@@ -1,0 +1,57 @@
+<div data-bind-class="state | prepend 'dashing-contrib state-'">
+    <section class="body">
+        <div class="canvas">
+
+            <div class="current-status-container" data-bind-class="statusClass">
+                <span data-bind="title"></span>
+                <span data-bind-class="arrowClass"></span>
+            </div>
+
+            <div class="row"> 
+                <div>
+                    <p class="left">Up:</p>
+                    <p class="figure right" data-bind="up | shortenedNumber | prepend prefix | append suffix"></p>
+                </div>
+            </div>
+
+            <div class="row"> 
+                <div>
+                    <p class="left top">Paused:</p>
+                    <p class="figure right top" data-bind="paused | shortenedNumber | prepend prefix | append suffix"></p>
+                </div>
+            </div>
+
+            <div class="row"> 
+                <div>
+                    <p class="left top">Unconfirmed:</p>
+                    <p class="figure right top" data-bind="unconfirmed_down | shortenedNumber | prepend prefix | append suffix"></p>
+                </div>
+            </div>
+
+            <div class="row"> 
+                    <p class="left top">Down:</p>
+                    <p class="figure right top" data-bind="down | shortenedNumber | prepend prefix | append suffix"></p>
+            </div>
+
+            <div class="row"> 
+                    <p class="left top">Unknown:</p>
+                    <p class="figure right top" data-bind="unknown | shortenedNumber | prepend prefix | append suffix"></p>
+            </div>
+
+            <div class="row"> 
+                    <p class="left doubletop">Total:</p>
+                    <p class="figure right doubletop" data-bind="total | shortenedNumber | prepend prefix | append suffix"></p>
+            </div>
+
+            <div class="row">
+               <ul class="list-nostyle">
+                 <li data-foreach-item="items">
+                    <span data-bind-class="item.state | prepend 'site-state-'">
+                    <span data-bind-class="item.state | prepend 'fa fa-' | append '-o' | replace 'ok', 'smile' | replace 'warning', 'meh' | replace 'critical','frown'" class="fa"></span></span>
+                    <span class="value" data-bind="item.label"></span>
+                 </li>
+               </ul>
+            </div>
+        </div>
+    </section>
+</div>

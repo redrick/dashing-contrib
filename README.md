@@ -44,6 +44,7 @@ Now you will be able to use the following widgets, click to see individual docum
  * [Rickshawgraph](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Rickshawgraph)
  * [Sidekiq](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Sidekiq)
  * [Pingdom Uptime](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Pingdom-Uptime)
+ * [Pingdom Summary](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Pingdom-Summary)
  * [Kue Status](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Kue-Status)
  * [Nagios List](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Nagios-List)
  * [Switcher](https://github.com/QubitProducts/dashing-contrib/wiki/Widget:-Switcher)
@@ -127,6 +128,7 @@ Take a look some build-in jobs as example:
  * [dashing-contrib/jobs/kue.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/kue.rb)
  * [dashing-contrib/jobs/nagios_list.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/nagios_list.rb)
  * [dashing-contrib/jobs/pingdom_uptime.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/pingdom_uptime.rb)
+ * [dashing-contrib/jobs/pingdom_summary.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/pingdom_summary.rb)
  * [dashing-contrib/jobs/dashing-state.rb](https://github.com/QubitProducts/dashing-contrib/blob/master/lib/dashing-contrib/jobs/dashing-state.rb)
  
 This is nice that backend data fetching can be now unit tested and reused. Dashing widget view layer can reuse the same job processor and present data in multiple forms. 

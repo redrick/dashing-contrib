@@ -20,7 +20,7 @@ module DashingContrib
                     status["down"][:value] +
                     status["unknown"][:value] 
         sum_ok = status["up"][:value] + status["paused"][:value]
-        sum_warn = status["unknown"][:value] + status["paused"][:value]
+        sum_warn = status["unknown"][:value]
         sum_crit = status["down"][:value] + status["unconfirmed_down"][:value]
         sum_status = 'warning' if sum_warn > 0
         sum_status = 'critical' if sum_crit > 0
@@ -29,7 +29,7 @@ module DashingContrib
         list = Array.new
 
  	stateMap = { 'up' => 'ok',
-                     'paused' => 'ok',
+                     'paused' => 'warning',
                      'unknown' => 'warning',
                      'down' => 'critical',
                      'unconfirmed_down' => 'critical' }

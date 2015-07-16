@@ -81,28 +81,13 @@ $moreinfo-color:    rgba(255, 255, 255, 0.7);
     font-size: 10px;
   }
 
-  .more-info {
-    color: $moreinfo-color;
-    p {
-      font-size:12px;
-      color: #8b8b8b;
-    }
-    .figure {
-      font-size:18px;
-      color: #CECFCF;
-    }
-    &.past-status {
-      bottom: 80px;
-    }
+  .site-state-ok {
+    color: #9ACA3C;
   }
-
-    .site-state-ok {
-        color: #9ACA3C;
-    }
-    .site-state-warning {
-      color: #D9D31E;
-    }
-    .site-state-critical {
-      color: #C32026;
-    }
+  .site-state-warning {
+    color: #D9D31E;
+  }
+  .site-state-critical {
+    color: #C32026;
+  }
 }

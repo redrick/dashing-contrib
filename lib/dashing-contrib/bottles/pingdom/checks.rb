@@ -18,7 +18,7 @@ module DashingContrib
                    'unknown'          => { checks: { }, value: 0 },
                    'paused'           => { checks: { }, value: 0 }
                  }
-        #puts checks
+
         checks[:checks].each { |check|
           states[check[:status]] = { checks: states[check[:status]][:checks], value: (states[check[:status]][:value] + 1) }
           if check.has_key?(:lasterrortime)

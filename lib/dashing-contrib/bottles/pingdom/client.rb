@@ -18,6 +18,10 @@ module DashingContrib
       def uptime(id, from_time, to_time)
         ::DashingContrib::Pingdom::Uptime.calc(credentials, id, from_time, to_time)
       end
+
+      def summary()
+        ::DashingContrib::Pingdom::Checks.summary(credentials)
+      end
     end
   end
 end

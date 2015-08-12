@@ -9,7 +9,8 @@ module DashingContrib
         client = DashingContrib::Pingdom::Client.new(
           username: options[:username],
           password: options[:password],
-          api_key:  options[:api_key]
+          api_key:  options[:api_key],
+          team_account: options[:team_account]
         )
 
         user_opt = self.default_date_ranges.merge(options)

@@ -29,7 +29,9 @@ module DashingContrib
       private
       def make_request(credentials, id, from_time, to_time)
         request_url = uptime_request_url(credentials, id, from_time, to_time)
-        response = RestClient.get(request_url, { 'App-Key' => credentials.api_key })
+        headers = { 'App-Key' => credentials.api_key }
+        headers['Account-Email'] = credentials.team_account unless credentials.team_account.empty?
+        response = RestClient.get(request_url, headers)
         MultiJson.load(response.body, { symbolize_keys: true })
       end
 

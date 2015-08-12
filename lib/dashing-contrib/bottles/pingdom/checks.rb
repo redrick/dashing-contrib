@@ -37,7 +37,9 @@ module DashingContrib
         else
           request_url = "https://#{credentials.username}:#{credentials.password}@api.pingdom.com/api/2.0/checks/#{id}"
         end
-        response = RestClient.get(request_url, { 'App-Key' => credentials.api_key })
+        headers = { 'App-Key' => credentials.api_key }
+        headers['Account-Email'] = credentials.team_account unless credentials.team_account.empty?
+        response = RestClient.get(request_url, headers)
         MultiJson.load response.body, { symbolize_keys: true }
       end
     end

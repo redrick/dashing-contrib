@@ -29,6 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'dashing', '~> 1.3'
   spec.add_dependency 'nagiosharder', '~> 0'
 
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rake', '~> 0'
+  spec.add_development_dependency 'rspec', '~> 0'
 end

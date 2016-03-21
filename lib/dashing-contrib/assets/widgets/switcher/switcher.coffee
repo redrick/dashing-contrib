@@ -80,7 +80,7 @@ class WidgetSwitcher
   start: (interval=5000) ->
     self = @
     @maxPos = @$elements.length - 1;
-    @curPos = 0
+    @curPos = Math.min(1, @maxPos)
 
     # Show only first at start
     self.$elements.slice(1).hide()

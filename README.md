@@ -177,3 +177,12 @@ There are a couple of ways to contribute. Brining those widgets scattered in git
  * Jobs utils, common Job data processing for graphing purpose 
  * Fix and add test
  * Improve documentation
+
+### Tests
+
+You can run the tests using bundler.
+
+```shell
+bundle install
+bundle exec rake spec
+```

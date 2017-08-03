@@ -77,6 +77,7 @@ class WidgetSwitcher
   constructor: (@elements) ->
     @$elements = $(@elements)
 
+
   start: (interval=5000) ->
     self = @
     @maxPos = @$elements.length - 1;
@@ -85,22 +86,155 @@ class WidgetSwitcher
     # Show only first at start
     self.$elements.slice(1).hide()
 
-    # Start loop
-    @handle = setInterval(()->
-      # Hide all at first - then show the current and ensure it uses table-cell display type
-      self.$elements.hide()
-      $(self.$elements[self.curPos]).show().css('display', 'table-cell')
+    # instantiate switcher controls for countdown and manual switching
+    @switcherControls = new WidgetSwitcherControls(interval, @)
+    @switcherControls.start() if @switcherControls.present()
 
-      # Increase the position or reset back to zero
-      self.curPos += 1
-      if self.curPos > self.maxPos
-        self.curPos = 0
+    @startLoop(interval)
+
+
+  startLoop: (interval) ->
+    self = @
+    @handle = setInterval(()->
+        self.next()
 
     , parseInt(interval, 10))
 
-  stop: () ->
+
+  next: () ->
+    @switcherControls.resetCountdown();
+    # Hide all at first - then show the current and ensure it uses table-cell display type
+    @$elements.hide()
+    $(@$elements[@curPos]).show().css('display', 'table-cell')
+
+    # Increase the position or reset back to zero
+    @curPos += 1
+    if @curPos > @maxPos
+      @curPos = 0
+
+
+  prev: () ->
+    self.curPos -= 1
+    if self.curPos < 0
+      self.curPos = self.maxPos
+
+    self.$elements.hide()
+    $(self.$elements[self.curPos]).show().css('display', 'table-cell')
+
+  stopLoop: () ->
     clearInterval(@handle)
 
+#  currentName: () ->
+#    @curName
+#
+  nextName: () ->
+    "to do"
+    #@dashboardNames[@curPos + 1] || @dashboardNames[0]
+#
+#  previousName: () ->
+#    @dashboardNames[@curPos - 1] || @dashboardNames[@dashboardNames.length - 1]
+
+
+class WidgetSwitcherControls
+  arrowContent = "&#65515;"
+  stopTimerContent = "stop timer"
+  startTimerContent = "start timer"
+
+  constructor: (interval=60000, widgetSwitcher) ->
+    @currentTime = parseInt(interval, 10)
+    @interval = parseInt(interval, 10)
+    @$elements = $('#dc-wid-switcher-controls')
+    @widgetSwitcher = widgetSwitcher
+    @incrementTime = 1000 # refresh every 1000 milliseconds
+    @arrowContent = @$elements.data('next-widget-content') || WidgetSwitcherControls.arrowContent
+    @stopTimerContent = @$elements.data('stop-widget-timer-content') || WidgetSwitcherControls.stopTimerContent
+    @startTimerContent = @$elements.data('start-widget-timer-content') || WidgetSwitcherControls.startTimerContent
+    @
+
+  present: () ->
+    @$elements.length
+
+  start: () ->
+    @addElements()
+    @$timer = $.timer(@updateTimer, @incrementTime, true)
+
+  addElements: () ->
+    template = @$elements.find('widget-name-template')
+    if template.length
+      @$nextWidgetNameTemplate = template
+      @$nextWidgetNameTemplate.remove()
+    else
+      @$nextWidgetNameTemplate = $("<widget-name-template>Next widget: $nextName in </widget-name-template>")
+    @$nextWidgetNameContainer = $("<span id='dc-wid-switcher-next-name'></span>")
+    @$countdown = $("<span id='dc-wid-switcher-countdown'></span>")
+    @$manualSwitcher = $("<span id='dc-wid-switcher-next' class='fa fa-forward'></span>").
+      html(@arrowContent).
+      click () =>
+        @widgetSwitcher.stopLoop()
+        @widgetSwitcher.next()
+        @widgetSwitcher.startLoop(@interval)
+    @$switcherStopper = $("<span id='dc-wid-switcher-pause-reset' class='fa fa-pause'></span>").
+      html(@stopTimerContent).
+      click(@pause)
+    @$elements.
+      append(@$nextWidgetNameContainer).
+      append(@$countdown).
+      append(@$manualSwitcher).
+      append(@$switcherStopper)
+
+  formatTime: (time) ->
+    time = time / 10;
+    min = parseInt(time / 6000, 10)
+    sec = parseInt(time / 100, 10) - (min * 60)
+    "#{(if min > 0 then @pad(min, 2) else "00")}:#{@pad(sec, 2)}"
+
+  pad: (number, length) =>
+    str = "#{number}"
+    while str.length < length
+      str = "0#{str}"
+    str
+
+  pause: () =>
+    @$timer.toggle()
+    if @isRunning()
+      @widgetSwitcher.stopLoop()
+      @$switcherStopper.removeClass('fa-pause').addClass('fa-play').html(@startTimerContent)
+    else
+      @widgetSwitcher.startLoop @currentTime
+      @$switcherStopper.removeClass('fa-play').addClass('fa-pause').html(@stopTimerContent)
+
+  isRunning: () =>
+    @$switcherStopper.hasClass('fa-pause')
+
+  resetCountdown: () ->
+    # Get time from form
+    newTime = @interval
+    if newTime > 0
+      @currentTime = newTime
+
+    # Stop and reset timer
+    @$timer.stop().play(true)
+
+  updateTimer: () =>
+    # Update widget name
+    @$nextWidgetNameContainer.html(
+      @$nextWidgetNameTemplate.html().replace('$nextName', @widgetSwitcher.nextName())
+    )
+    # Output timer position
+    timeString = @formatTime(@currentTime)
+    @$countdown.html(timeString)
+
+    # If timer is complete, trigger alert
+    if @currentTime is 0
+      #@pause()
+      #@resetCountdown()
+      return
+
+    # Increment timer position
+    @currentTime -= @incrementTime
+    if @currentTime < 0
+      @currentTime = 0
+        
 # Adds a countdown timer to show when next dashboard will appear
 # TODO:
 #   - show the name of the next dashboard

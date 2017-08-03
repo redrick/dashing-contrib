@@ -88,9 +88,10 @@ class WidgetSwitcher
 
     # instantiate switcher controls for countdown and manual switching
     @switcherControls = new WidgetSwitcherControls(interval, @)
-    @switcherControls.start() if @switcherControls.present()
-
-    @startLoop(interval)
+    if @switcherControls.present()
+      @switcherControls.start() 
+    else
+      @startLoop(interval)
 
 
   startLoop: (interval) ->
@@ -102,7 +103,6 @@ class WidgetSwitcher
 
 
   next: () ->
-    @switcherControls.resetCountdown();
     # Hide all at first - then show the current and ensure it uses table-cell display type
     @$elements.hide()
     $(@$elements[@curPos]).show().css('display', 'table-cell')
@@ -170,9 +170,7 @@ class WidgetSwitcherControls
     @$manualSwitcher = $("<span id='dc-wid-switcher-next' class='fa fa-forward'></span>").
       html(@arrowContent).
       click () =>
-        @widgetSwitcher.stopLoop()
-        @widgetSwitcher.next()
-        @widgetSwitcher.startLoop(@interval)
+        @resetCountdown()
     @$switcherStopper = $("<span id='dc-wid-switcher-pause-reset' class='fa fa-pause'></span>").
       html(@stopTimerContent).
       click(@pause)
@@ -197,10 +195,8 @@ class WidgetSwitcherControls
   pause: () =>
     @$timer.toggle()
     if @isRunning()
-      @widgetSwitcher.stopLoop()
       @$switcherStopper.removeClass('fa-pause').addClass('fa-play').html(@startTimerContent)
     else
-      @widgetSwitcher.startLoop @currentTime
       @$switcherStopper.removeClass('fa-play').addClass('fa-pause').html(@stopTimerContent)
 
   isRunning: () =>
@@ -212,6 +208,7 @@ class WidgetSwitcherControls
     if newTime > 0
       @currentTime = newTime
 
+    @widgetSwitcher.next()
     # Stop and reset timer
     @$timer.stop().play(true)
 
@@ -227,7 +224,7 @@ class WidgetSwitcherControls
     # If timer is complete, trigger alert
     if @currentTime is 0
       #@pause()
-      #@resetCountdown()
+      @resetCountdown()
       return
 
     # Increment timer position

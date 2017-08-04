@@ -78,8 +78,9 @@ class WidgetSwitcher
     @$elements = $(@elements)
 
 
-  start: (interval=5000) ->
+  start: (interval=5000, control) ->
     self = @
+    
     @maxPos = @$elements.length - 1;
     @curPos = Math.min(1, @maxPos)
 
@@ -87,7 +88,7 @@ class WidgetSwitcher
     self.$elements.slice(1).hide()
 
     # instantiate switcher controls for countdown and manual switching
-    @switcherControls = new WidgetSwitcherControls(interval, @)
+    @switcherControls = new WidgetSwitcherControls(interval, control, @)
     if @switcherControls.present()
       @switcherControls.start() 
     else
@@ -140,10 +141,10 @@ class WidgetSwitcherControls
   stopTimerContent = "stop timer"
   startTimerContent = "start timer"
 
-  constructor: (interval=60000, widgetSwitcher) ->
+  constructor: (interval=60000,id, widgetSwitcher) ->
     @currentTime = parseInt(interval, 10)
     @interval = parseInt(interval, 10)
-    @$elements = $('#dc-wid-switcher-controls')
+    @$elements = $("##{id}")
     @widgetSwitcher = widgetSwitcher
     @incrementTime = 1000 # refresh every 1000 milliseconds
     @arrowContent = @$elements.data('next-widget-content') || WidgetSwitcherControls.arrowContent
@@ -348,7 +349,9 @@ Dashing.on 'ready', ->
     $widgets = $listItem.children('div')
     if $widgets.length > 1
       switcher = new WidgetSwitcher $widgets
-      switcher.start($listItem.attr('data-switcher-interval') or 5000)
+      interval = $listItem.attr('data-switcher-interval')
+      control = $listItem.attr('data-switcher-control')
+      switcher.start(interval or 5000, control)
 
   # If multiple dashboards defined (using data-swticher-dashboards="board1 board2")
   $container = $('#container')

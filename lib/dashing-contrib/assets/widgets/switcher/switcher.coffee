@@ -115,12 +115,16 @@ class WidgetSwitcher
 
 
   prev: () ->
+    @$elements.hide()
+    previous = @curPos - 2
+    previous = @maxPos if previous == -1
+    previous = @maxPos - 1  if previous == -2
+
+    $(@$elements[previous]).show().css('display', 'table-cell')
+
     @curPos -= 1
     if @curPos < 0
       @curPos = @maxPos
-
-    @$elements.hide()
-    $(@$elements[@curPos]).show().css('display', 'table-cell')
 
   stopLoop: () ->
     clearInterval(@handle)
@@ -169,7 +173,11 @@ class WidgetSwitcherControls
       @$nextWidgetNameTemplate = $("<widget-name-template>Next widget: $nextName in </widget-name-template>")
     @$nextWidgetNameContainer = $("<span id='dc-wid-switcher-next-name'></span>")
     @$countdown = $("<span id='dc-wid-switcher-countdown'></span>")
-    @$manualSwitcher = $("<span id='dc-wid-switcher-next' class='fa fa-forward'></span>").
+    @$manualPrev = $("<span id='dc-wid-switcher-prev' class='fa fa-backward'></span>").
+      html(@arrowContent).
+      click () =>
+        @resetCountdown(false)
+    @$manualNext = $("<span id='dc-wid-switcher-next' class='fa fa-forward'></span>").
       html(@arrowContent).
       click () =>
         @resetCountdown()
@@ -179,7 +187,8 @@ class WidgetSwitcherControls
     @$elements.
       append(@$nextWidgetNameContainer).
       append(@$countdown).
-      append(@$manualSwitcher).
+      append(@$manualPrev).
+      append(@$manualNext).
       append(@$switcherStopper)
 
   formatTime: (time) ->
@@ -204,13 +213,16 @@ class WidgetSwitcherControls
   isRunning: () =>
     @$switcherStopper.hasClass('fa-pause')
 
-  resetCountdown: () ->
+  resetCountdown: (next=true) ->
     # Get time from form
     newTime = @interval
     if newTime > 0
       @currentTime = newTime
 
-    @widgetSwitcher.next()
+    if next
+      @widgetSwitcher.next()
+    else
+      @widgetSwitcher.prev();
     # Stop and reset timer
     @$timer.stop().play(true)
 

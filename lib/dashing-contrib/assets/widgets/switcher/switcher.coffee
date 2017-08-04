@@ -115,12 +115,12 @@ class WidgetSwitcher
 
 
   prev: () ->
-    self.curPos -= 1
-    if self.curPos < 0
-      self.curPos = self.maxPos
+    @curPos -= 1
+    if @curPos < 0
+      @curPos = @maxPos
 
-    self.$elements.hide()
-    $(self.$elements[self.curPos]).show().css('display', 'table-cell')
+    @$elements.hide()
+    $(@$elements[@curPos]).show().css('display', 'table-cell')
 
   stopLoop: () ->
     clearInterval(@handle)
@@ -129,7 +129,8 @@ class WidgetSwitcher
 #    @curName
 #
   nextName: () ->
-    "to do"
+    $(@elements[@curPos]).attr("data-switcher-name")
+        
     #@dashboardNames[@curPos + 1] || @dashboardNames[0]
 #
 #  previousName: () ->

@@ -163,6 +163,7 @@ class WidgetSwitcherControls
   start: () ->
     @addElements()
     @$timer = $.timer(@updateTimer, @incrementTime, true)
+    @updateWidgetName()
 
   addElements: () ->
     template = @$elements.find('widget-name-template')
@@ -176,11 +177,11 @@ class WidgetSwitcherControls
     @$manualPrev = $("<span id='dc-wid-switcher-prev' class='fa fa-backward'></span>").
       html(@arrowContent).
       click () =>
-        @resetCountdown(false)
+        @switchWidget(false)
     @$manualNext = $("<span id='dc-wid-switcher-next' class='fa fa-forward'></span>").
       html(@arrowContent).
       click () =>
-        @resetCountdown()
+        @switchWidget()
     @$switcherStopper = $("<span id='dc-wid-switcher-pause-reset' class='fa fa-pause'></span>").
       html(@stopTimerContent).
       click(@pause)
@@ -188,20 +189,24 @@ class WidgetSwitcherControls
       append(@$nextWidgetNameContainer).
       append(@$countdown).
       append(@$manualPrev).
-      append(@$manualNext).
-      append(@$switcherStopper)
-
-  formatTime: (time) ->
-    time = time / 10;
-    min = parseInt(time / 6000, 10)
-    sec = parseInt(time / 100, 10) - (min * 60)
-    "#{(if min > 0 then @pad(min, 2) else "00")}:#{@pad(sec, 2)}"
+      append(@$switcherStopper).
+      append(@$manualNext)
 
   pad: (number, length) =>
     str = "#{number}"
     while str.length < length
       str = "0#{str}"
     str
+
+  formatTime: (time) ->
+    time = time / 10;
+    min = parseInt(time / 6000, 10)
+    sec = parseInt(time / 100, 10) - (min * 60)
+
+    formattedMin = if min > 0 then @pad(min, 2) else "00"
+    formattedSec = @pad(sec, 2)
+    "#{formattedMin}:#{formattedSec}"
+
 
   pause: () =>
     @$timer.toggle()
@@ -214,6 +219,11 @@ class WidgetSwitcherControls
     @$switcherStopper.hasClass('fa-pause')
 
   resetCountdown: (next=true) ->
+    @switchWidget(next)
+    # Stop and reset timer
+    @$timer.stop().play(true)
+
+  switchWidget: (next=true) ->
     # Get time from form
     newTime = @interval
     if newTime > 0
@@ -223,18 +233,12 @@ class WidgetSwitcherControls
       @widgetSwitcher.next()
     else
       @widgetSwitcher.prev();
-    # Stop and reset timer
-    @$timer.stop().play(true)
+
+    @updateWidgetName()
+    @updateTimeString()
 
   updateTimer: () =>
-    # Update widget name
-    @$nextWidgetNameContainer.html(
-      @$nextWidgetNameTemplate.html().replace('$nextName', @widgetSwitcher.nextName())
-    )
-    # Output timer position
-    timeString = @formatTime(@currentTime)
-    @$countdown.html(timeString)
-
+    @updateTimeString()
     # If timer is complete, trigger alert
     if @currentTime is 0
       #@pause()
@@ -245,7 +249,15 @@ class WidgetSwitcherControls
     @currentTime -= @incrementTime
     if @currentTime < 0
       @currentTime = 0
-        
+
+  updateWidgetName: () ->
+    @$nextWidgetNameContainer.html(
+      @$nextWidgetNameTemplate.html().replace('$nextName', @widgetSwitcher.nextName())
+    )
+
+  updateTimeString: () ->
+    timeString = @formatTime(@currentTime)
+    @$countdown.html(timeString)        
 # Adds a countdown timer to show when next dashboard will appear
 # TODO:
 #   - show the name of the next dashboard
@@ -352,6 +364,7 @@ class DashboardSwitcherControls
 Dashing.DashboardSwitcher = DashboardSwitcher
 Dashing.WidgetSwitcher = WidgetSwitcher
 Dashing.DashboardSwitcherControls = DashboardSwitcherControls
+Dashing.WidgetSwitcherControls = WidgetSwitcherControls
 
 # Dashboard loaded and ready
 Dashing.on 'ready', ->

@@ -77,30 +77,187 @@ class WidgetSwitcher
   constructor: (@elements) ->
     @$elements = $(@elements)
 
-  start: (interval=5000) ->
+
+  start: (interval=5000, control) ->
     self = @
+    
     @maxPos = @$elements.length - 1;
     @curPos = Math.min(1, @maxPos)
 
     # Show only first at start
     self.$elements.slice(1).hide()
 
-    # Start loop
-    @handle = setInterval(()->
-      # Hide all at first - then show the current and ensure it uses table-cell display type
-      self.$elements.hide()
-      $(self.$elements[self.curPos]).show().css('display', 'table-cell')
+    # instantiate switcher controls for countdown and manual switching
+    @switcherControls = new WidgetSwitcherControls(interval, control, @)
+    if @switcherControls.present()
+      @switcherControls.start() 
+    else
+      @startLoop(interval)
 
-      # Increase the position or reset back to zero
-      self.curPos += 1
-      if self.curPos > self.maxPos
-        self.curPos = 0
+
+  startLoop: (interval) ->
+    self = @
+    @handle = setInterval(()->
+        self.next()
 
     , parseInt(interval, 10))
 
-  stop: () ->
+
+  next: () ->
+    # Hide all at first - then show the current and ensure it uses table-cell display type
+    @$elements.hide()
+    $(@$elements[@curPos]).show().css('display', 'table-cell')
+
+    # Increase the position or reset back to zero
+    @curPos += 1
+    if @curPos > @maxPos
+      @curPos = 0
+
+
+  prev: () ->
+    @$elements.hide()
+    previous = @curPos - 2
+    previous = @maxPos if previous == -1
+    previous = @maxPos - 1  if previous == -2
+
+    $(@$elements[previous]).show().css('display', 'table-cell')
+
+    @curPos -= 1
+    if @curPos < 0
+      @curPos = @maxPos
+
+  stopLoop: () ->
     clearInterval(@handle)
 
+#  currentName: () ->
+#    @curName
+#
+  nextName: () ->
+    $(@elements[@curPos]).attr("data-switcher-name")
+        
+    #@dashboardNames[@curPos + 1] || @dashboardNames[0]
+#
+#  previousName: () ->
+#    @dashboardNames[@curPos - 1] || @dashboardNames[@dashboardNames.length - 1]
+
+
+class WidgetSwitcherControls
+  arrowContent = "&#65515;"
+  stopTimerContent = "stop timer"
+  startTimerContent = "start timer"
+
+  constructor: (interval=60000,id, widgetSwitcher) ->
+    @currentTime = parseInt(interval, 10)
+    @interval = parseInt(interval, 10)
+    @$elements = $("##{id}")
+    @widgetSwitcher = widgetSwitcher
+    @incrementTime = 1000 # refresh every 1000 milliseconds
+    @arrowContent = @$elements.data('next-widget-content') || WidgetSwitcherControls.arrowContent
+    @stopTimerContent = @$elements.data('stop-widget-timer-content') || WidgetSwitcherControls.stopTimerContent
+    @startTimerContent = @$elements.data('start-widget-timer-content') || WidgetSwitcherControls.startTimerContent
+    @
+
+  present: () ->
+    @$elements.length
+
+  start: () ->
+    @addElements()
+    @$timer = $.timer(@updateTimer, @incrementTime, true)
+    @updateWidgetName()
+
+  addElements: () ->
+    template = @$elements.find('widget-name-template')
+    if template.length
+      @$nextWidgetNameTemplate = template
+      @$nextWidgetNameTemplate.remove()
+    else
+      @$nextWidgetNameTemplate = $("<widget-name-template>Next widget: $nextName in </widget-name-template>")
+    @$nextWidgetNameContainer = $("<span id='dc-wid-switcher-next-name'></span>")
+    @$countdown = $("<span id='dc-wid-switcher-countdown'></span>")
+    @$manualPrev = $("<span id='dc-wid-switcher-prev' class='fa fa-backward'></span>").
+      html(@arrowContent).
+      click () =>
+        @switchWidget(false)
+    @$manualNext = $("<span id='dc-wid-switcher-next' class='fa fa-forward'></span>").
+      html(@arrowContent).
+      click () =>
+        @switchWidget()
+    @$switcherStopper = $("<span id='dc-wid-switcher-pause-reset' class='fa fa-pause'></span>").
+      html(@stopTimerContent).
+      click(@pause)
+    @$elements.
+      append(@$nextWidgetNameContainer).
+      append(@$countdown).
+      append(@$manualPrev).
+      append(@$switcherStopper).
+      append(@$manualNext)
+
+  pad: (number, length) =>
+    str = "#{number}"
+    while str.length < length
+      str = "0#{str}"
+    str
+
+  formatTime: (time) ->
+    time = time / 10;
+    min = parseInt(time / 6000, 10)
+    sec = parseInt(time / 100, 10) - (min * 60)
+
+    formattedMin = if min > 0 then @pad(min, 2) else "00"
+    formattedSec = @pad(sec, 2)
+    "#{formattedMin}:#{formattedSec}"
+
+
+  pause: () =>
+    @$timer.toggle()
+    if @isRunning()
+      @$switcherStopper.removeClass('fa-pause').addClass('fa-play').html(@startTimerContent)
+    else
+      @$switcherStopper.removeClass('fa-play').addClass('fa-pause').html(@stopTimerContent)
+
+  isRunning: () =>
+    @$switcherStopper.hasClass('fa-pause')
+
+  resetCountdown: (next=true) ->
+    @switchWidget(next)
+    # Stop and reset timer
+    @$timer.stop().play(true)
+
+  switchWidget: (next=true) ->
+    # Get time from form
+    newTime = @interval
+    if newTime > 0
+      @currentTime = newTime
+
+    if next
+      @widgetSwitcher.next()
+    else
+      @widgetSwitcher.prev();
+
+    @updateWidgetName()
+    @updateTimeString()
+
+  updateTimer: () =>
+    @updateTimeString()
+    # If timer is complete, trigger alert
+    if @currentTime is 0
+      #@pause()
+      @resetCountdown()
+      return
+
+    # Increment timer position
+    @currentTime -= @incrementTime
+    if @currentTime < 0
+      @currentTime = 0
+
+  updateWidgetName: () ->
+    @$nextWidgetNameContainer.html(
+      @$nextWidgetNameTemplate.html().replace('$nextName', @widgetSwitcher.nextName())
+    )
+
+  updateTimeString: () ->
+    timeString = @formatTime(@currentTime)
+    @$countdown.html(timeString)        
 # Adds a countdown timer to show when next dashboard will appear
 # TODO:
 #   - show the name of the next dashboard
@@ -207,6 +364,7 @@ class DashboardSwitcherControls
 Dashing.DashboardSwitcher = DashboardSwitcher
 Dashing.WidgetSwitcher = WidgetSwitcher
 Dashing.DashboardSwitcherControls = DashboardSwitcherControls
+Dashing.WidgetSwitcherControls = WidgetSwitcherControls
 
 # Dashboard loaded and ready
 Dashing.on 'ready', ->
@@ -217,7 +375,9 @@ Dashing.on 'ready', ->
     $widgets = $listItem.children('div')
     if $widgets.length > 1
       switcher = new WidgetSwitcher $widgets
-      switcher.start($listItem.attr('data-switcher-interval') or 5000)
+      interval = $listItem.attr('data-switcher-interval')
+      control = $listItem.attr('data-switcher-control')
+      switcher.start(interval or 5000, control)
 
   # If multiple dashboards defined (using data-swticher-dashboards="board1 board2")
   $container = $('#container')

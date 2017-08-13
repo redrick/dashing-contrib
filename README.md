@@ -1,6 +1,6 @@
 # dashing-contrib 
 
-[![Build Status](https://travis-ci.org/QubitProducts/dashing-contrib.svg?branch=master)](https://travis-ci.org/QubitProducts/dashing-contrib)
+[![Build Status](https://travis-ci.org/QubitProducts/dashing-contrib.svg?branch=master)](https://travis-ci.org/QubitProducts/dashing-contrib) [![Gem Version](https://badge.fury.io/rb/dashing-contrib.svg)](https://badge.fury.io/rb/dashing-contrib)
 
 
 This project is an extension to Shopify's Dashing. Including this rubygem you will be able to:

@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   
   spec.add_dependency 'dotenv', '~> 0.11.1'
-  spec.add_dependency 'rest-client', '~> 1.6'
+  spec.add_dependency 'rest-client', '~> 2.0'
   spec.add_dependency 'multi_json', '~> 1.10'
   spec.add_dependency 'time_diff', '~> 0.3'
   spec.add_dependency 'sidekiq', '~> 5.0'

@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rest-client', '~> 1.6'
   spec.add_dependency 'multi_json', '~> 1.10'
   spec.add_dependency 'time_diff', '~> 0.3'
-  spec.add_dependency 'sidekiq', '~> 3.5'
+  spec.add_dependency 'sidekiq', '~> 5.0'
   spec.add_dependency 'activesupport', '~> 4.1'
   spec.add_dependency 'sinatra', '~> 1.4'
   spec.add_dependency 'dashing', '~> 1.3'
